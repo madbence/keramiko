@@ -9,8 +9,10 @@ const products = [{
   tags: ['alma', 'sütő']
 }];
 
-for (let i = 0; i < 9; i++) {
-  products.push(products[0]);
+for (let i = 0; i < 18; i++) {
+  products.push({
+    ...products[0],
+  });
 }
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
