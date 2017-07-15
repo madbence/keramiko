@@ -1,4 +1,5 @@
 import List from './list';
+import Details from './details';
 
 const products = [{
   id: 1,
@@ -19,4 +20,4 @@ export const fetch = async () => {
   return products;
 };
 
-export {List};
+export {List, Details};
