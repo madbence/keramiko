@@ -3,11 +3,11 @@ import {Router, Route} from 'inferno-router';
 import createBrowserHistory from 'history/createBrowserHistory';
 import {List as ProductList, Details as ProductDetails} from './products';
 
-const App = props => (
+const App = ({children}, {router}) => (
   <div id='wrapper'>
     <div id='nav'>
       <ul>
-        <li>Terméklista</li>
+        <li onClick={() => router.push('/')}>Terméklista</li>
       </ul>
     </div>
     <div id='main-wrapper'>
@@ -15,7 +15,7 @@ const App = props => (
         <h2>Szia!</h2>
       </header>
       <div id='main'>
-        {props.children}
+        {children}
       </div>
     </div>
   </div>
