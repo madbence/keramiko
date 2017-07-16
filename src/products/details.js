@@ -17,29 +17,46 @@ const Details = ({id, name, description, price, tags}) => (
         </header>
       )
   }
+    <div className='details'>
+      <div className='info'>
+        <div>
+          <input placeholder='A termék ára' /><span>Ft</span>
+        </div>
+        <div>
+          <textarea placeholder='A termék leírása' />
+        </div>
+      </div>
+      <div className='photos'>
+      </div>
+    </div>
   </div>
 );
 
 export default class ProductDetails extends Component {
   constructor(props, context) {
     super(props, context);
-    this.state = {
-      loading: true,
-      item: null,
-    };
+    if (props.id) {
+      this.state = {
+        loading: true,
+        item: null,
+      };
+    } else {
+      this.state = {
+        loading: false,
+        item: {
+          id: null,
+          name: '',
+          price: null,
+          description: '',
+          tags: [],
+        },
+      };
+    }
   }
 
   componentDidMount() {
-    this.setState({
-      loading: false,
-      item: {
-        id: null,
-        name: '',
-        price: null,
-        description: '',
-        tags: [],
-      },
-    });
+    if (this.state.item) return;
+    // TODO load existing item
   }
 
   render() {

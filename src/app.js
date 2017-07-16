@@ -25,7 +25,7 @@ Inferno.render(
   <Router history={createBrowserHistory()}>
     <Route component={App}>
       <Route path='/' component={ProductList} />
-      <Route path='/products/:id' component={({params}) => <ProductDetails id={params.id} />} />
+      <Route path='/products/:id' component={({params}) => <ProductDetails id={params.id === 'new' ? null : params.id} />} />
     </Route>
   </Router>,
   document.querySelector('#app')
