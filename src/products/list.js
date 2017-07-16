@@ -45,7 +45,7 @@ export default class ProductList extends Component {
       <div className='card'>
         <header>
           <h2>Termékek</h2>
-          <button onClick={() => this.router.push('/products/1')}>Új termék</button>
+          <button onClick={() => this.router.push('/products/new')}>Új termék</button>
         </header>
         <ul className='products'>
           <li className='header product'>
