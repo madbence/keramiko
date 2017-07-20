@@ -12,6 +12,7 @@ const products = [{
 for (let i = 0; i < 18; i++) {
   products.push({
     ...products[0],
+    id: i + 2,
   });
 }
 
