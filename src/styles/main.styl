@@ -6,11 +6,11 @@
   list-style none
   box-sizing border-box
 
-@base-font-color = #444
+$base-font-color = #444
 
 body
   font-size 14px
-  color #676767
+  color $base-font-color
   background #f3f3f3
   font-family 'Open Sans', sans-serif
   font-weight 300
@@ -19,6 +19,7 @@ input, button, textarea
   font-family 'Open Sans', sans-serif
   font-weight 300
   outline none
+  color $base-font-color
   border 1px solid #e7e7e7
 
 button
@@ -112,21 +113,27 @@ h1, h2, h3
 
   header
     display flex
+    padding 15px
 
 .product
   header
     input
-      padding 15px
       border none
+      font-size 30px
+    span
+      margin-right 15px
       font-size 30px
   .details
     display flex
+
   .info, .photos
     flex 1
+    margin 0 15px
+    & > div
+      margin-top 15px
 
   .info
     input, textarea
-      padding 15px
       border none
 
     input
@@ -138,3 +145,7 @@ h1, h2, h3
       resize none
       width 100%
       height 200px
+  [type=file]
+    display none
+  img
+    width 100%
