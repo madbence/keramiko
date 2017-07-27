@@ -6,7 +6,8 @@ const products = [{
   name: 'Almasütő',
   description: 'Lorem ipsum',
   price: 3500,
-  tags: ['alma', 'sütő']
+  tags: ['alma', 'sütő'],
+  photos: [],
 }];
 
 for (let i = 0; i < 18; i++) {
@@ -18,8 +19,12 @@ for (let i = 0; i < 18; i++) {
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
-export const fetch = async () => {
+export const fetch = async id => {
   await sleep(1000);
+  if (id) {
+    const item = products.find(p => p.id === id);
+    return item;
+  }
   return products;
 };
 

@@ -59,7 +59,7 @@ export default class ProductList extends Component {
             loading
               ? <li className='product loader'>Betöltés...</li>
               : items.map(item => (
-                <li className='product'>
+                <li className='product' onClick={() => this.router.push(`/products/${item.id}`)}>
                 {
                   productFields.map(({name, display}) => (
                     <div className={'field ' + name}>{display(item[name])}</div>

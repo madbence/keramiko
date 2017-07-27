@@ -21,6 +21,10 @@
     "inferno": "^3.6.4",
     "inferno-component": "^3.6.4",
     "inferno-router": "^3.6.4",
+    "koa": "^2.3.0",
+    "koa-compose": "^4.0.0",
+    "koa-route": "^3.2.0",
+    "pg": "^7.0.2",
     "stylus": "^0.54.5",
     "watchify": "^3.9.0"
   }

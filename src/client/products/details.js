@@ -14,7 +14,7 @@ export default class ProductDetails extends Component {
       };
     } else {
       this.state = {
-        loading: false,
+        loading: true,
         saving: false,
         id: null,
         name: '',
@@ -45,21 +45,20 @@ export default class ProductDetails extends Component {
   async load(id) {
     this.setState({loading: true});
     const item = await products.fetch(id);
-    this.setState({loading: false});
     this._accept(item);
+    this.setState({loading: false});
   }
 
   async componentWillReceiveProps(props) {
-    console.log(this.state.id, props.id);
     if (props.id === this.state.id) {
       return;
     }
     await this.load(props.id);
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     if (this.props.id) {
-      await this.load(this.props.id);
+      this.load(this.props.id);
     } else {
       this._accept({
         id: null,
@@ -69,6 +68,7 @@ export default class ProductDetails extends Component {
         tags: [],
         photos: [],
       });
+      this.setState({loading: false});
     }
   }
 

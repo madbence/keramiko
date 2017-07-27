@@ -79,8 +79,20 @@ h1, h2, h3
     border-bottom 1px solid #e7e7e7
     &:first-child
       border-bottom 1px solid #ddd
-    &:nth-child(2n+3)
-      background #f9f9f9
+
+    even = #ffffff
+    odd  = #f9f9f9
+    amount = 5%
+
+    background even
+
+    &:not(.header)
+      cursor pointer
+      &:nth-child(odd)
+        background odd
+
+      &:hover
+        background darken(even, amount)
 
   .field
     flex 1
