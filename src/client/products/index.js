@@ -1,10 +1,7 @@
 import List from './list';
 import Details from './details';
 
-const api = async path => {
-  const res = await window.fetch(path);
-  return res.json();
-}
+import {get, post, put} from '../api';
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -19,25 +16,32 @@ const parse = item => ({
 
 export const fetch = async id => {
   if (id) {
-    const res = await api('/api/v1/products/' + id);
+    console.log('loading product', id);
+    const res = await get('/api/v1/products/' + id);
     return parse(res);
   }
-  const items = await api('/api/v1/products');
+  console.log('loading product list');
+  const items = await get('/api/v1/products');
   return items.map(parse);
 };
 
 export const save = async item => {
-  console.log('saving', item);
   if (!item.id) {
-    item.id = products.length + 1;
-    await sleep(1000);
-    products.push(item);
-    return item;
+    console.log('saving new product', item);
+    const res = await post('/api/v1/products', {
+      name: item.name,
+      price: item.price,
+      description: item.description,
+    });
+    return parse(res);
   } else {
-    const stored = products.find(p => p.id === item.id);
-    await sleep(1000);
-    Object.assign(stored, item);
-    return item;
+    console.log('saving existing product', item);
+    const res = await put('/api/v1/products/' + item.id, {
+      name: item.name,
+      price: item.price,
+      description: item.description,
+    });
+    return parse(res);
   }
 }
 
