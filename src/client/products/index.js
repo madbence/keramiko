@@ -1,31 +1,29 @@
 import List from './list';
 import Details from './details';
 
-const products = [{
-  id: 1,
-  name: 'Almasütő',
-  description: 'Lorem ipsum',
-  price: 3500,
-  tags: ['alma', 'sütő'],
-  photos: [],
-}];
-
-for (let i = 0; i < 18; i++) {
-  products.push({
-    ...products[0],
-    id: i + 2,
-  });
+const api = async path => {
+  const res = await window.fetch(path);
+  return res.json();
 }
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
+const parse = item => ({
+  id: item.id,
+  name: item.name,
+  price: item.price,
+  description: item.description,
+  tags: [],
+  photos: [],
+});
+
 export const fetch = async id => {
-  await sleep(1000);
   if (id) {
-    const item = products.find(p => p.id === id);
-    return item;
+    const res = await api('/api/v1/products/' + id);
+    return parse(res);
   }
-  return products;
+  const items = await api('/api/v1/products');
+  return items.map(parse);
 };
 
 export const save = async item => {
