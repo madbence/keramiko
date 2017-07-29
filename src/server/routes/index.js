@@ -12,7 +12,7 @@ const create = async ctx => {
     price: body.price,
     description: body.description,
   });
-}
+};
 
 const update = async (ctx, id) => {
   const body = await json(ctx.req);
@@ -22,7 +22,7 @@ const update = async (ctx, id) => {
     price: body.price,
     description: body.description,
   });
-}
+};
 
 const list = async ctx => {
   ctx.body = await getProducts();
