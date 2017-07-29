@@ -6,7 +6,7 @@ import {createEmpty} from './utils';
 export default class ProductDetails extends Component {
 
   state = {
-    loading: true,
+    loading: false,
     saving: false,
     item: null,
   };
@@ -58,7 +58,7 @@ export default class ProductDetails extends Component {
   render() {
     const {loading, saving, item} = this.state;
 
-    if (loading) {
+    if (loading || !item) {
       return (
         <div className='card'>
           <span>Betöltés</span>
