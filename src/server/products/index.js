@@ -23,9 +23,9 @@ export const getProducts = async () => {
 
 export const createProduct = async product => {
   const res = await db.query('insert into products (name, price, description) values ($1, $2, $3) returning id', [
-    body.name,
-    body.price,
-    body.description,
+    product.name,
+    product.price,
+    product.description,
   ]);
   const id = res.rows[0].id;
 
