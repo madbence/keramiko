@@ -3,6 +3,8 @@ import Component from 'inferno-component';
 import * as products from './';
 import {createEmpty} from './utils';
 
+import * as images from '../images';
+
 export default class ProductDetails extends Component {
 
   state = {
@@ -74,12 +76,18 @@ export default class ProductDetails extends Component {
       },
     });
 
-    const updatePhotos = e => this.setState({
-      item: {
-        ...this.state.item,
-        photos: Array.from(e.target.files).map(file => window.URL.createObjectURL(file)),
-      },
-    });
+    const updatePhotos = async e => {
+      this.setState({
+        item: {
+          ...this.state.item,
+          photos: Array.from(e.target.files).map(file => window.URL.createObjectURL(file)),
+        },
+      });
+
+      for (const file of e.target.files) {
+        await images.upload(file);
+      }
+    };
 
     return (
       <div className='card'>
