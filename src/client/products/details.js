@@ -5,6 +5,8 @@ import {createEmpty} from './utils';
 
 import * as images from '../images';
 
+const num = n => parseInt(n, 10);
+
 export default class ProductDetails extends Component {
 
   state = {
@@ -77,14 +79,15 @@ export default class ProductDetails extends Component {
     });
 
     const updatePhotos = async e => {
+      const files = Array.from(e.target.files);
       this.setState({
         item: {
           ...this.state.item,
-          photos: Array.from(e.target.files).map(file => window.URL.createObjectURL(file)),
+          photos: [...this.state.item.photos, ...files.map(file => window.URL.createObjectURL(file))]
         },
       });
 
-      for (const file of e.target.files) {
+      for (const file of files) {
         await images.upload(file);
       }
     };
@@ -92,37 +95,39 @@ export default class ProductDetails extends Component {
     return (
       <div className='card'>
         <div className='product'>
-          {
-            id
-              ? (
-                <header>
-                  <span>#{id}</span>
-                  <input disabled={saving} value={name} onChange={update('name')} placeholder='A termék neve' />
-                </header>
-              )
-              : (
-                <header>
-                  <input disabled={saving} value={name} onInput={update('name')} placeholder='Írd be a termék nevét' />
-                </header>
-              )
-          }
+          <h1>{id ? `#${id} ` : ''}{name ? name : (id ? '' : 'Új termék')}</h1>
           <div className='details'>
             <div className='info'>
-              <div>
-                <input disabled={saving} value={price} onChange={update('price', x => +x)} placeholder='A termék ára' /><span>Ft</span>
-              </div>
-              <div>
-                <textarea disabled={saving} value={description} onChange={update('description')} placeholder='A termék leírása' />
-              </div>
+              <label>
+                <input disabled={saving} value={name} onInput={update('name')} />
+                <span className={name ? 'active' : ''}>A termék neve</span>
+              </label>
+              <label>
+                <input disabled={saving} value={price ? price : ''} onChange={update('price', num)} />
+                <span className={price ? 'active' : ''}>A termék ára</span>
+              </label>
+              <label>
+                <textarea disabled={saving} value={description} onChange={update('description')} />
+                <span className={description ? 'active' : ''}>A termék leírása</span>
+              </label>
               <div>
                 <button onClick={() => this.save()}>{saving ? 'Mentés...' : 'Mentés'}</button>
               </div>
             </div>
             <div className='photos'>
-              <label>Válassz egy képet!<input accept='image/*' type='file' onChange={updatePhotos} /></label>
-              {
-                photos.map(url => <img src={url} />)
-              }
+              <label>
+                <input accept='image/*' type='file' onChange={updatePhotos} />
+                <div>Válassz egy képet!</div>
+              </label>
+              <ul>
+                {
+                  photos.map(url => (
+                    <li>
+                      <img src={url} />
+                    </li>
+                  ))
+                }
+              </ul>
             </div>
           </div>
         </div>
