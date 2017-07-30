@@ -9,7 +9,7 @@ const productFields = [
   f('id', 'ID'),
   f('name', 'Név'),
   f('description', 'Leírás'),
-  f('price', 'Ár'),
+  f('price', 'Ár', price => `${price} Ft`),
   f('tags', 'Címkék', tags => tags.join(', ')),
 ];
 
