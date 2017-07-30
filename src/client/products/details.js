@@ -111,7 +111,7 @@ export default class ProductDetails extends Component {
     };
 
     return (
-      <div className='card'>
+      <div className='card product-details'>
         <div className='product'>
           <h1>{id ? `#${id} ` : ''}{name ? name : (id ? '' : 'Új termék')}</h1>
           <div className='details'>

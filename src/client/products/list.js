@@ -42,7 +42,7 @@ export default class ProductList extends Component {
   render() {
     const {loading, items} = this.state;
     return (
-      <div className='card'>
+      <div className='card product-list'>
         <header>
           <h2>Termékek</h2>
           <button onClick={() => this.router.push('/products/new')}>Új termék</button>
