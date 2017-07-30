@@ -17,18 +17,18 @@ const parse = item => ({
 export const fetch = async id => {
   if (id) {
     console.log('loading product', id);
-    const res = await get('/api/v1/products/' + id);
+    const res = await get('/products/' + id);
     return parse(res);
   }
   console.log('loading product list');
-  const items = await get('/api/v1/products');
+  const items = await get('/products');
   return items.map(parse);
 };
 
 export const save = async item => {
   if (!item.id) {
     console.log('saving new product', item);
-    const res = await post('/api/v1/products', {
+    const res = await post('/products', {
       name: item.name,
       price: item.price,
       description: item.description,
@@ -36,7 +36,7 @@ export const save = async item => {
     return parse(res);
   } else {
     console.log('saving existing product', item);
-    const res = await put('/api/v1/products/' + item.id, {
+    const res = await put('/products/' + item.id, {
       name: item.name,
       price: item.price,
       description: item.description,
