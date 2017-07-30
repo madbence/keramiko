@@ -103,8 +103,8 @@ export default class ProductDetails extends Component {
                 <span className={name ? 'active' : ''}>A termék neve</span>
               </label>
               <label>
-                <input disabled={saving} value={price ? price : ''} onChange={update('price', num)} />
-                <span className={price ? 'active' : ''}>A termék ára</span>
+                <input type='number' disabled={saving} value={price ? price : ''} onChange={update('price', num)} />
+                <span className={price ? 'active' : ''}>A termék ára (Ft)</span>
               </label>
               <label>
                 <textarea disabled={saving} value={description} onChange={update('description')} />
