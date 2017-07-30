@@ -156,10 +156,6 @@ export default class ProductDetails extends Component {
               </div>
             </div>
             <div className='photos'>
-              <label>
-                <input accept='image/*' type='file' onChange={updatePhotos} />
-                <div>Válassz egy képet!</div>
-              </label>
               <ul>
                 {
                   photos.map(url => (
@@ -168,6 +164,12 @@ export default class ProductDetails extends Component {
                     </li>
                   ))
                 }
+                <li>
+                  <label>
+                    <input accept='image/*' type='file' onChange={updatePhotos} />
+                    <div>Válassz egy képet!</div>
+                  </label>
+                </li>
               </ul>
             </div>
           </div>
