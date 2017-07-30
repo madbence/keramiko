@@ -70,7 +70,7 @@ export default class ProductDetails extends Component {
       );
     }
 
-    const {id, name, price, description, photos} = item;
+    const {id, name, price, description, photos, tags} = item;
     const update = (field, parse = x => x) => event => this.setState({
       item: {
         ...this.state.item,
@@ -92,6 +92,24 @@ export default class ProductDetails extends Component {
       }
     };
 
+    const addTag = tag => {
+      this.setState({
+        item: {
+          ...this.state.item,
+          tags: [...this.state.item.tags, tag.trim()],
+        },
+      });
+    };
+
+    const removeTag = () => {
+      this.setState({
+        item: {
+          ...this.state.item,
+          tags: this.state.item.tags.slice(0, -1),
+        },
+      });
+    };
+
     return (
       <div className='card'>
         <div className='product'>
@@ -110,6 +128,29 @@ export default class ProductDetails extends Component {
                 <textarea disabled={saving} value={description} onChange={update('description')} />
                 <span className={description ? 'active' : ''}>A termék leírása</span>
               </label>
+              <ul className='tags'>
+                {
+                  tags.map(tag => <li className='tag'>{tag}</li>)
+                }
+                <li>
+                  <input
+                    placeholder='Új címke'
+                    onKeyUp={e => {
+                      const key = e.keyCode;
+                      const value = e.target.value;
+
+                      switch (key) {
+                        case 13:
+                          addTag(value);
+                          e.target.value = '';
+                          break;
+                        case 8:
+                          if (value === '') return removeTag();
+                      }
+                    }}
+                  />
+                </li>
+              </ul>
               <div>
                 <button onClick={() => this.save()}>{saving ? 'Mentés...' : 'Mentés'}</button>
               </div>

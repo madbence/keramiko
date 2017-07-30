@@ -10,7 +10,7 @@ const parse = item => ({
   name: item.name,
   price: item.price,
   description: item.description,
-  tags: [],
+  tags: ['foobar', 'bar', 'árzívtűrő tükörfúrógép'],
   photos: [],
 });
 
