@@ -2,6 +2,9 @@ import Inferno from 'inferno';
 import Component from 'inferno-component';
 import {fetch} from './';
 
+import Icon from '../icons';
+import trash from '../icons/trash';
+
 const id = x => x;
 const f = (name, label, display = id) => ({name, label, display});
 
@@ -35,12 +38,40 @@ export default class ProductList extends Component {
     const items = await fetch();
     this.setState({
       loading: false,
-      items,
+      items: items.map(item => ({
+        ...item,
+        pending: false,
+      })),
     });
   }
 
   render() {
     const {loading, items} = this.state;
+
+    let body = loading
+      ? <li className='product loader'>Betöltés...</li>
+      : items.map(item => (
+        <li className={'product' + (item.pending ? ' pending' : '')} onClick={() => this.router.push(`/products/${item.id}`)}>
+          {
+            productFields.map(({name, display}) => (
+              <div className={'field ' + name}>{display(item[name])}</div>
+            ))
+          }
+          <div className='field actions'><Icon icon={trash} onClick={e => {
+            this.setState({
+              items: items.map(i => {
+                if (i !== item) return i;
+                return {
+                  ...item,
+                  pending: true,
+                }
+              }),
+            });
+            e.stopPropagation();
+          }} /></div>
+        </li>
+      ));
+
     return (
       <div className='card product-list'>
         <header>
@@ -49,25 +80,14 @@ export default class ProductList extends Component {
         </header>
         <ul className='products'>
           <li className='header product'>
-          {
-            productFields.map(({name, label}) => (
-              <div className={'field ' + name}>{label}</div>
-            ))
-          }
-          </li>
-          {
-            loading
-              ? <li className='product loader'>Betöltés...</li>
-              : items.map(item => (
-                <li className='product' onClick={() => this.router.push(`/products/${item.id}`)}>
-                {
-                  productFields.map(({name, display}) => (
-                    <div className={'field ' + name}>{display(item[name])}</div>
-                  ))
-                }
-                </li>
+            {
+              productFields.map(({name, label}) => (
+                <div className={'field ' + name}>{label}</div>
               ))
-          }
+            }
+            <div className='field actions' />
+          </li>
+          {body}
         </ul>
       </div>
     );
