@@ -2,12 +2,17 @@ import Inferno from 'inferno';
 import {Router, Route} from 'inferno-router';
 import createBrowserHistory from 'history/createBrowserHistory';
 import {List as ProductList, Details as ProductDetails} from './products';
+import Icon from './icons';
+import shoppingCart from './icons/shopping-cart';
 
 const App = ({children}, {router}) => (
   <div id='wrapper'>
     <div id='nav'>
       <ul>
-        <li onClick={() => router.push('/')}>Terméklista</li>
+        <li onClick={() => router.push('/')}>
+          <Icon icon={shoppingCart} />
+          Terméklista
+        </li>
       </ul>
     </div>
     <div id='main-wrapper'>
