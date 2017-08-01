@@ -4,6 +4,8 @@ import {fetch} from './';
 
 import Icon from '../icons';
 import trash from '../icons/trash';
+import check from '../icons/check';
+import times from '../icons/times';
 
 const id = x => x;
 const f = (name, label, display = id) => ({name, label, display});
@@ -11,6 +13,7 @@ const f = (name, label, display = id) => ({name, label, display});
 const productFields = [
   f('id', 'ID'),
   f('name', 'Név'),
+  f('published', 'Publikus', published => <Icon className={published ? 'published' : 'unpublished'} icon={published ? check : times} />),
   f('description', 'Leírás'),
   f('price', 'Ár', price => `${price} Ft`),
   f('tags', 'Címkék', tags => tags.join(', ')),
