@@ -3,6 +3,7 @@ export const createEmpty = () => ({
   name: null,
   price: null,
   description: null,
+  published: true,
   tags: [],
   photos: [],
 });

@@ -159,7 +159,7 @@ h1, h2, h3
     align-items flex-start
     padding 15px
 
-label
+.material-input
   position relative
   display block
   padding 15px 0 30px 0
@@ -167,7 +167,7 @@ label
   textarea
     resize none
 
-  input, textarea
+  input[type=text], input[type=number], textarea
     border none
     border-bottom 1px solid #bbb
     font-size 16px
@@ -189,59 +189,4 @@ label
     top 0
     font-size 12px
 
-.product-details .product
-  input, label, textarea
-    width 100%
-  textarea
-    height 100px
-  h1
-    margin 15px
-  .details
-    display flex
-  .info, .photos
-    flex 1
-    margin 15px
-
-  .tags
-    margin 0 0 30px 0
-    padding 2.5x
-    display flex
-    flex-wrap wrap
-    .tag
-      height 32px
-      margin 2.5px
-      border-radius 16px
-      background #e6e6e6
-      padding 8px
-      font-size 16px
-      line-height 1
-    input
-      height 32px
-      margin 2.5px
-      padding 8px
-      font-size 16px
-      border none
-
-  [type=file]
-    visibility hidden
-    width 0
-  .photos label
-    border 2px dashed #e7e7e7
-    border-radius 15px
-    margin 0
-    padding 0
-    height 125px
-    display flex
-    align-items center
-    justify-content center
-  .photos
-    ul
-      display flex
-      align-items stretch
-      flex-wrap wrap
-      margin 7.5px
-    li
-      width 50%
-      padding 7.5px
-    img
-      width 100%
+@require './product-details.styl'

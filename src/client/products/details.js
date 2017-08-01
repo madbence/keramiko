@@ -6,6 +6,7 @@ import {createEmpty} from './utils';
 import * as images from '../images';
 
 const num = n => parseInt(n, 10);
+const checkbox = (value, input) => !input.checked;
 
 export default class ProductDetails extends Component {
 
@@ -70,11 +71,11 @@ export default class ProductDetails extends Component {
       );
     }
 
-    const {id, name, price, description, photos, tags} = item;
+    const {id, name, price, description, published, photos, tags} = item;
     const update = (field, parse = x => x) => event => this.setState({
       item: {
         ...this.state.item,
-        [field]: parse(event.target.value),
+        [field]: parse(event.target.value, event.target, event),
       },
     });
 
@@ -112,66 +113,68 @@ export default class ProductDetails extends Component {
 
     return (
       <div className='card product-details'>
-        <div className='product'>
-          <h1>{id ? `#${id} ` : ''}{name ? name : (id ? '' : 'Új termék')}</h1>
-          <div className='details'>
-            <div className='info'>
-              <label>
-                <input disabled={saving} value={name} onInput={update('name')} />
-                <span className={name ? 'active' : ''}>A termék neve</span>
-              </label>
-              <label>
-                <input type='number' disabled={saving} value={price ? price : ''} onChange={update('price', num)} />
-                <span className={price ? 'active' : ''}>A termék ára (Ft)</span>
-              </label>
-              <label>
-                <textarea disabled={saving} value={description} onChange={update('description')} />
-                <span className={description ? 'active' : ''}>A termék leírása</span>
-              </label>
-              <ul className='tags'>
-                {
-                  tags.map(tag => <li className='tag'>{tag}</li>)
-                }
-                <li>
-                  <input
-                    placeholder='Új címke'
-                    onKeyUp={e => {
-                      const key = e.keyCode;
-                      const value = e.target.value;
+        <h1 className='title'>{id ? `#${id} ` : ''}{name ? name : (id ? '' : 'Új termék')}</h1>
+        <div className='details'>
+          <div className='info'>
+            <label className='name material-input'>
+              <input type='text' disabled={saving} value={name} onInput={update('name')} />
+              <span className={name ? 'active' : ''}>A termék neve</span>
+            </label>
+            <label className='price material-input'>
+              <input type='number' disabled={saving} value={price ? price : ''} onChange={update('price', num)} />
+              <span className={price ? 'active' : ''}>A termék ára (Ft)</span>
+            </label>
+            <label className='description material-input'>
+              <textarea disabled={saving} value={description} onInput={update('description')} />
+              <span className={description ? 'active' : ''}>A termék leírása</span>
+            </label>
+            <label className='published'>
+              <span>Látható az oldalon</span>
+              <input disabled={saving} type='checkbox' checked={published} onChange={update('published', checkbox)} />
+            </label>
+            <ul className='tags'>
+              {
+                tags.map(tag => <li className='tag'>{tag}</li>)
+              }
+              <li>
+                <input
+                  placeholder='Új címke'
+                  onKeyUp={e => {
+                    const key = e.keyCode;
+                    const value = e.target.value;
 
-                      switch (key) {
-                        case 13:
-                          addTag(value);
-                          e.target.value = '';
-                          break;
-                        case 8:
-                          if (value === '') return removeTag();
-                      }
-                    }}
-                  />
-                </li>
-              </ul>
-              <div>
-                <button onClick={() => this.save()}>{saving ? 'Mentés...' : 'Mentés'}</button>
-              </div>
+                    switch (key) {
+                      case 13:
+                        addTag(value);
+                        e.target.value = '';
+                        break;
+                      case 8:
+                        if (value === '') return removeTag();
+                    }
+                  }}
+                />
+              </li>
+            </ul>
+            <div>
+              <button onClick={() => this.save()}>{saving ? 'Mentés...' : 'Mentés'}</button>
             </div>
-            <div className='photos'>
-              <ul>
-                {
-                  photos.map(url => (
-                    <li>
-                      <img src={url} />
-                    </li>
-                  ))
-                }
-                <li>
-                  <label>
-                    <input accept='image/*' type='file' onChange={updatePhotos} />
-                    <div>Válassz egy képet!</div>
-                  </label>
-                </li>
-              </ul>
-            </div>
+          </div>
+          <div className='photos'>
+            <ul>
+              {
+                photos.map(url => (
+                  <li>
+                    <img src={url} />
+                  </li>
+                ))
+              }
+              <li>
+                <label>
+                  <input accept='image/*' type='file' onChange={updatePhotos} />
+                  <div>Válassz egy képet!</div>
+                </label>
+              </li>
+            </ul>
           </div>
         </div>
       </div>

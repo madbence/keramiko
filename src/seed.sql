@@ -5,6 +5,7 @@ create table products (
   name varchar(32) not null,
   price integer not null,
   description text not null,
+  published boolean not null,
   "createdAt" timestamp not null default current_timestamp,
   "updatedAt" timestamp not null default current_timestamp
 );

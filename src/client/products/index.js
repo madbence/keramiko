@@ -10,6 +10,7 @@ const parse = item => ({
   name: item.name,
   price: item.price,
   description: item.description,
+  published: item.published,
   tags: ['foobar', 'bar', 'árzívtűrő tükörfúrógép'],
   photos: [],
 });
@@ -32,6 +33,7 @@ export const save = async item => {
       name: item.name,
       price: item.price,
       description: item.description,
+      published: item.published,
     });
     return parse(res);
   } else {
@@ -40,6 +42,7 @@ export const save = async item => {
       name: item.name,
       price: item.price,
       description: item.description,
+      published: item.published,
     });
     return parse(res);
   }

@@ -6,6 +6,7 @@ function parse(row) {
     name: row.name,
     price: row.price,
     description: row.description,
+    published: row.published,
     createdAt: row.createdAt,
     updatedAt: row.updatedAt,
   };
@@ -22,10 +23,11 @@ export const getProducts = async () => {
 };
 
 export const createProduct = async product => {
-  const res = await db.query('insert into products (name, price, description) values ($1, $2, $3) returning id', [
+  const res = await db.query('insert into products (name, price, description, published) values ($1, $2, $3, $4) returning id', [
     product.name,
     product.price,
     product.description,
+    product.published,
   ]);
   const id = res.rows[0].id;
 
@@ -33,10 +35,11 @@ export const createProduct = async product => {
 }
 
 export const updateProduct = async product => {
-  await db.query('update products set name = $1, price = $2, description = $3, "updatedAt" = now() where id = $4', [
+  await db.query('update products set name = $1, price = $2, description = $3, published = $4, "updatedAt" = now() where id = $5', [
     product.name,
     product.price,
     product.description,
+    product.published,
     product.id,
   ]);
 

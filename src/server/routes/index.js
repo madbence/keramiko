@@ -13,6 +13,7 @@ const create = async ctx => {
     name: body.name,
     price: body.price,
     description: body.description,
+    published: body.published,
   });
 };
 
@@ -23,6 +24,7 @@ const update = async (ctx, id) => {
     name: body.name,
     price: body.price,
     description: body.description,
+    published: body.published,
   });
 };
 
