@@ -22,10 +22,57 @@
   &--item
     display flex
     border-bottom 1px solid #e7e7e7
+    cursor pointer
+    background #ffffff
+    &:nth-child(odd)
+      background #f9f9f9
+    &:hover
+      background darken(#fff, 5%)
+
 
     &--header
+      cursor default
       border-bottom 1px solid #ddd
+      background #ffffff !important
+      font-weight 400
 
   &--item-field
     flex 1
-    padding 10px 15px
+    padding 6px 6px
+    display flex
+    align-items center
+
+    &.id
+      flex initial
+      width 20px
+    &.published
+      flex initial
+      width 65px
+    &.price
+      flex initial
+      width 100px
+    &.actions
+      flex initial
+      width 30px
+      justify-content center
+
+  &--item-status
+    width 15px
+    height 15px
+
+    &--published
+      svg
+        fill green
+
+    &--unpublished
+      svg
+        fill red
+
+  &--remove
+    width 15px
+    height 15px
+    svg
+      fill #666
+      &:hover
+        fill #222
+

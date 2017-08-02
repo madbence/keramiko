@@ -13,7 +13,7 @@ const f = (name, label, display = id) => ({name, label, display});
 const productFields = [
   f('id', 'ID'),
   f('name', 'Név'),
-  f('published', 'Publikus', published => <Icon className={published ? 'published' : 'unpublished'} icon={published ? check : times} />),
+  f('published', 'Publikus', published => <Icon className={'product-list--item-status ' + (published ? 'product-list--item-status--published' : 'product-list--item-status--unpublished')} icon={published ? check : times} />),
   f('description', 'Leírás'),
   f('price', 'Ár', price => `${price} Ft`),
   f('tags', 'Címkék', tags => tags.join(', ')),
@@ -60,7 +60,7 @@ export default class ProductList extends Component {
               <div className={'product-list--item-field ' + name}>{display(item[name])}</div>
             ))
           }
-          <div className='product-list--item-field actions'><Icon icon={trash} onClick={e => {
+          <div className='product-list--item-field actions'><Icon className='product-list--remove' icon={trash} onClick={e => {
             this.setState({
               items: items.map(i => {
                 if (i !== item) return i;
