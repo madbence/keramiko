@@ -113,9 +113,9 @@ export default class ProductDetails extends Component {
 
     return (
       <div className='card product-details'>
-        <h1 className='title'>{id ? `#${id} ` : ''}{name ? name : (id ? '' : 'Új termék')}</h1>
-        <div className='details'>
-          <div className='info'>
+        <h1 className='product-details--title'>{id ? `#${id} ` : ''}{name ? name : (id ? '' : 'Új termék')}</h1>
+        <div className='product-details--details-form'>
+          <div className='product-details--section'>
             <label className='name material-input'>
               <input type='text' disabled={saving} value={name} onInput={update('name')} />
               <span className={name ? 'active' : ''}>A termék neve</span>
@@ -132,9 +132,9 @@ export default class ProductDetails extends Component {
               <span>Látható az oldalon</span>
               <input disabled={saving} type='checkbox' checked={published} onChange={update('published', checkbox)} />
             </label>
-            <ul className='tags'>
+            <ul className='product-details--tag-list'>
               {
-                tags.map(tag => <li className='tag'>{tag}</li>)
+                tags.map(tag => <li className='product-details--tag-pill'>{tag}</li>)
               }
               <li>
                 <input
@@ -159,17 +159,17 @@ export default class ProductDetails extends Component {
               <button onClick={() => this.save()}>{saving ? 'Mentés...' : 'Mentés'}</button>
             </div>
           </div>
-          <div className='photos'>
-            <ul>
+          <div className='product-details--section'>
+            <ul className='product-details--photo-list'>
               {
                 photos.map(url => (
-                  <li>
+                  <li className='product-details--photo-item'>
                     <img src={url} />
                   </li>
                 ))
               }
-              <li>
-                <label>
+              <li className='product-details--photo-item'>
+                <label className='product-details--uploader'>
                   <input accept='image/*' type='file' onChange={updatePhotos} />
                   <div>Válassz egy képet!</div>
                 </label>

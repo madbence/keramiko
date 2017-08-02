@@ -1,18 +1,19 @@
 $gutter = 16px
 
 .product-details
-  //
   input, label, textarea
     width 100%
   textarea
     height 100px
-  //
-  .title
+
+  &--title
     margin $gutter
-  .details
+
+  &--details-form
     display flex
     padding 0 ($gutter/2)
-  .info, .photos
+
+  &--section
     flex 1
     margin 0 ($gutter/2)
 
@@ -26,19 +27,12 @@ $gutter = 16px
     input
       width auto
 
-  .tags
+  &--tag-list
     margin 0 0 30px 0
     padding 2.5x
     display flex
     flex-wrap wrap
-    .tag
-      height 32px
-      margin 2.5px
-      border-radius 16px
-      background #e6e6e6
-      padding 8px
-      font-size 16px
-      line-height 1
+
     input
       height 32px
       margin 2.5px
@@ -46,10 +40,16 @@ $gutter = 16px
       font-size 16px
       border none
 
-  [type=file]
-    visibility hidden
-    width 0
-  .photos label
+  &--tag-pill
+    height 32px
+    margin 2.5px
+    border-radius 16px
+    background #e6e6e6
+    padding 8px
+    font-size 16px
+    line-height 1
+
+  &--uploader
     border 2px dashed #e7e7e7
     border-radius 15px
     margin 0
@@ -59,14 +59,18 @@ $gutter = 16px
     align-items center
     justify-content center
 
-  .photos
-    ul
-      display flex
-      align-items stretch
-      flex-wrap wrap
-      margin 7.5px
-    li
-      width 50%
-      padding 7.5px
+    input
+      visibility hidden
+      width 0
+
+  &--photo-list
+    display flex
+    align-items stretch
+    flex-wrap wrap
+    margin 7.5px
+
+  &--photo-item
+    width 50%
+    padding 7.5px
     img
       width 100%
