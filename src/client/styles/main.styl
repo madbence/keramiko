@@ -82,22 +82,17 @@ h1, h2, h3
   display flex
   flex-direction column
 
-.product-list .products
-  flex 1
-  display flex
-  flex-direction column
 
-  .icon
-    width 16px
-    height 16px
-    margin 0 5px
-    svg
-      fill #666
-    &:hover svg
-      fill #222
+.icon
+  width 16px
+  height 16px
+  margin 0 5px
+  svg
+    fill #666
+  &:hover svg
+    fill #222
 
   li
-    display flex
     border-bottom 1px solid #e7e7e7
     &:first-child
       border-bottom 1px solid #ddd
@@ -151,14 +146,6 @@ h1, h2, h3
   background #fff
   border 1px solid #e7e7e7
 
-  h2
-    flex 1
-
-  header
-    display flex
-    align-items flex-start
-    padding 15px
-
 .material-input
   position relative
   display block
@@ -190,3 +177,4 @@ h1, h2, h3
     font-size 12px
 
 @require './product-details.styl'
+@require './product-list.styl'

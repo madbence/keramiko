@@ -52,15 +52,15 @@ export default class ProductList extends Component {
     const {loading, items} = this.state;
 
     let body = loading
-      ? <li className='product loader'>Betöltés...</li>
+      ? <li className='product-list--loader'>Betöltés...</li>
       : items.map(item => (
-        <li className={'product' + (item.pending ? ' pending' : '')} onClick={() => this.router.push(`/products/${item.id}`)}>
+        <li className={'product-list--item' + (item.pending ? ' product-list--item--pending' : '')} onClick={() => this.router.push(`/products/${item.id}`)}>
           {
             productFields.map(({name, display}) => (
-              <div className={'field ' + name}>{display(item[name])}</div>
+              <div className={'product-list--item-field ' + name}>{display(item[name])}</div>
             ))
           }
-          <div className='field actions'><Icon icon={trash} onClick={e => {
+          <div className='product-list--item-field actions'><Icon icon={trash} onClick={e => {
             this.setState({
               items: items.map(i => {
                 if (i !== item) return i;
@@ -76,19 +76,19 @@ export default class ProductList extends Component {
       ));
 
     return (
-      <div className='card product-list'>
-        <header>
-          <h2>Termékek</h2>
+      <div className='product-list'>
+        <header className='product-list--header'>
+          <h2 className='product-list--title'>Termékek</h2>
           <button onClick={() => this.router.push('/products/new')}>Új termék</button>
         </header>
-        <ul className='products'>
-          <li className='header product'>
+        <ul className='product-list--list'>
+          <li className='product-list--item product-list--item--header'>
             {
               productFields.map(({name, label}) => (
-                <div className={'field ' + name}>{label}</div>
+                <div className={'product-list--item-field product-list--item-field--header ' + name}>{label}</div>
               ))
             }
-            <div className='field actions' />
+            <div className='product-list--item-field product-list--item-field--header actions' />
           </li>
           {body}
         </ul>
