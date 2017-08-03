@@ -1,6 +1,6 @@
-# keramiko-admin
+# keramiko
 
-> `inferno`-based admin ui for `keramiko`
+> `inferno`-based ui for `keramiko`
 
 ## dev
 
