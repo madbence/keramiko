@@ -7,9 +7,9 @@ import shoppingCart from './icons/shopping-cart';
 
 const App = ({children}, {router}) => (
   <div id='wrapper'>
-    <div id='nav'>
+    <div className='navigation'>
       <ul>
-        <li onClick={() => router.push('/')}>
+        <li className='navigation--item' onClick={() => router.push('/')}>
           <Icon icon={shoppingCart} />
           Terméklista
         </li>
