@@ -11,6 +11,7 @@ ul
   list-style none
 
 $base-font-color = #444
+$gutter = 16px
 
 body
   font-size 14px
@@ -86,11 +87,11 @@ h1, h2, h3
   display flex
   flex-direction column
 
-.card
+card()
   flex 1
   display flex
   flex-direction column
-  margin 15px
+  margin $gutter
   background #fff
   border 1px solid #e7e7e7
 
