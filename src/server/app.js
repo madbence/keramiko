@@ -4,13 +4,7 @@ import {get} from 'koa-route';
 
 import serve from './middlewares/file';
 import api from './routes';
-
-const subdomain = (domain, middlewares) => async (ctx, next) => {
-  if (ctx.subdomains[0] === domain) {
-    return middlewares(ctx, next);
-  }
-  return next();
-};
+import subdomain from './utils/subdomain';
 
 const app = new Koa();
 
