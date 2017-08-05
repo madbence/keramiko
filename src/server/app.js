@@ -1,9 +1,9 @@
 import Koa from 'koa';
+import compose from 'koa-compose';
+import {get} from 'koa-route';
 
 import serve from './middlewares/file';
 import api from './routes';
-import compose from 'koa-compose';
-import {get} from 'koa-route';
 
 const subdomain = (domain, middlewares) => async (ctx, next) => {
   if (ctx.subdomains[0] === domain) {
