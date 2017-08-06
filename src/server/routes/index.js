@@ -59,7 +59,22 @@ const upload = async ctx => {
   ctx.body = file;
 };
 
+const errors = async (ctx, next) => {
+  try {
+    await next();
+  } catch (err) {
+    console.error(err);
+    ctx.body = {
+      message: err.message,
+    };
+    ctx.status = err.statusCode || 500;
+  }
+}
+
 export default compose([
+
+  errors,
+
   get('/api/v1/products', list),
   get('/api/v1/products/:id', fetch),
   put('/api/v1/products/:id', update),
