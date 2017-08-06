@@ -10,6 +10,15 @@ const create = method => async (path, body) => {
     body: JSON.stringify(body),
   });
 
+  if (res.status >= 400) {
+    const body = await res.json();
+    const err = new Error(body.message);
+    err.code = res.status;
+    err.url = res.url;
+    err.headers = res.headers;
+    throw err;
+  }
+
   return res.json();
 }
 
@@ -23,6 +32,15 @@ export const get = async path => {
       'Accept': 'application/json',
     },
   });
+
+  if (res.status >= 400) {
+    const body = await res.json();
+    const err = new Error(body.message);
+    err.code = res.status;
+    err.url = res.url;
+    err.headers = res.headers;
+    throw err;
+  }
 
   return res.json();
 };
