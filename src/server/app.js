@@ -1,3 +1,5 @@
+import fs from 'fs';
+import {join} from 'path';
 import Koa from 'koa';
 import compose from 'koa-compose';
 import {get} from 'koa-route';
@@ -21,9 +23,6 @@ const admin = compose([
   serve('/*', './public/index.html', 'text/html'),
 ]);
 
-import fs from 'fs';
-import {join} from 'path';
-const dir = process.env.UPLOAD_DIR;
 const cdn = get('/*', (ctx, url) => {
   const match = url.match(/^(.*?)(-.*?)?\.(.*?)$/);
   if (!match) {
@@ -32,7 +31,7 @@ const cdn = get('/*', (ctx, url) => {
 
   const hash = match[1];
   const ext = match[3];
-  const path = join(dir, hash + '.' + ext);
+  const path = join(config.uploadDir, hash + '.' + ext);
   const mime = ext === 'jpg' ? 'jpeg' : 'png';
   ctx.body = fs.createReadStream(path);
   ctx.type = 'image/' + mime;
