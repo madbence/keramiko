@@ -15,5 +15,5 @@ export const upload = async file => {
     req.send(form);
   });
 
-  return req.response;
+  return JSON.parse(req.response);
 };
