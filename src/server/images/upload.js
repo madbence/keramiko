@@ -2,18 +2,13 @@ import {join} from 'path';
 import {sha1, collect, writeFile} from './utils';
 import resize from './resize';
 import db from '../db';
-
-const dir = process.env.UPLOAD_DIR;
-
-if (!dir) {
-  throw new Error('Missing UPLOAD_DIR!');
-}
+import config from '../config';
 
 export default async function upload(stream, type) {
   const buffer = await collect(stream);
   const hash = await sha1(buffer);
   const name = hash.slice(0, 6) + '.' + type;
-  const path = join(dir, name);
+  const path = join(config.uploadDir, name);
 
   await writeFile(path, buffer);
 
