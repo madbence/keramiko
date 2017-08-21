@@ -4,6 +4,7 @@ import * as products from './';
 import {createEmpty} from './utils';
 
 import * as images from '../images';
+import config from '../config';
 
 const num = n => parseInt(n, 10);
 const checkbox = (value, input) => !input.checked;
