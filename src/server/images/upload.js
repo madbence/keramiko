@@ -1,6 +1,7 @@
 import {join} from 'path';
 import {sha1, collect, writeFile} from './utils';
 import resize from './resize';
+import db from '../db';
 
 const dir = process.env.UPLOAD_DIR;
 
@@ -23,7 +24,12 @@ export default async function upload(stream, type) {
     resize(path, 100),
   ]);
 
+  const res = await db.query('insert into images (original) values ($1) returning id', [
+    name,
+  ]);
+
   return {
+    id: res.rows[0].id,
     hash,
     type,
     name,
