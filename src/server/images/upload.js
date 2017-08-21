@@ -1,6 +1,6 @@
-import crypto from 'crypto';
-import fs from 'fs';
 import {join} from 'path';
+import {sha1, collect, writeFile} from './utils';
+import resize from './resize';
 
 const dir = process.env.UPLOAD_DIR;
 
@@ -8,37 +8,25 @@ if (!dir) {
   throw new Error('Missing UPLOAD_DIR!');
 }
 
-const writeFile = (path, buffer) => new Promise((resolve, reject) => {
-  fs.writeFile(path, buffer, err => {
-    if (err) return reject(err);
-    resolve();
-  });
-});
-
-function sha1(buffer) {
-  const hash = crypto.createHash('sha1');
-  hash.update(buffer);
-  return hash.digest('hex');
-}
-
-function collect(stream) {
-  return new Promise((resolve, reject) => {
-    let buffer = Buffer.alloc(0);
-    stream
-      .on('data', chunk => buffer = Buffer.concat([buffer, chunk]))
-      .once('error', reject)
-      .once('end', () => resolve(buffer));
-  });
-}
-
 export default async function upload(stream, type) {
   const buffer = await collect(stream);
   const hash = await sha1(buffer);
   const name = hash.slice(0, 6) + '.' + type;
-  await writeFile(join(dir, name), buffer);
+  const path = join(dir, name);
+
+  await writeFile(path, buffer);
+
+  const sizes = await Promise.all([
+    resize(path, 1000),
+    resize(path, 500),
+    resize(path, 250),
+    resize(path, 100),
+  ]);
+
   return {
     hash,
     type,
     name,
+    sizes,
   };
 }
