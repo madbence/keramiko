@@ -4,7 +4,7 @@ export const upload = async file => {
   form.append('file', file);
 
   const req = new XMLHttpRequest();
-  req.open('POST', '/api/v1/images');
+  req.open('POST', '/api/v1/photos');
   await new Promise((resolve, reject) => {
     req.addEventListener('load', () => {
       if (req.status === 200) {

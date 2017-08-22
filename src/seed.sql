@@ -1,5 +1,5 @@
 drop table if exists products;
-drop table if exists images;
+drop table if exists photos;
 
 create table products (
   id serial primary key,
@@ -11,7 +11,7 @@ create table products (
   "updatedAt" timestamp not null default current_timestamp
 );
 
-create table images (
+create table photos (
   id serial primary key,
   original varchar(32) not null,
   "createdAt" timestamp not null default current_timestamp

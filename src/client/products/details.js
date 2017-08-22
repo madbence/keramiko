@@ -3,7 +3,7 @@ import Component from 'inferno-component';
 import * as products from './';
 import {createEmpty} from './utils';
 
-import * as images from '../images';
+import * as photos from '../photos';
 import config from '../config';
 
 const num = n => parseInt(n, 10);
@@ -95,7 +95,7 @@ export default class ProductDetails extends Component {
       });
 
       for (const [url, file] of Object.entries(map)) {
-        const uploaded = await images.upload(file);
+        const uploaded = await photos.upload(file);
         this.setState({
           item: {
             ...this.state.item,

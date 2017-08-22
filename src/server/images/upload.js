@@ -19,7 +19,7 @@ export default async function upload(stream, type) {
     resize(path, 100),
   ]);
 
-  const res = await db.query('insert into images (original) values ($1) returning id', [
+  const res = await db.query('insert into photos (original) values ($1) returning id', [
     name,
   ]);
 

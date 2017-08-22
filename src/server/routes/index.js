@@ -80,5 +80,5 @@ export default compose([
   put('/api/v1/products/:id', update),
   post('/api/v1/products', create),
 
-  post('/api/v1/images', upload),
+  post('/api/v1/photos', upload),
 ]);
