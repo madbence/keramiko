@@ -61,6 +61,34 @@ export default class ProductDetails extends Component {
     this.setState({saving: false});
   }
 
+  async uploadPhotos(e) {
+    const files = Array.from(e.target.files);
+    const map = files.reduce((map, file) => {
+      map[window.URL.createObjectURL(file)] = file;
+      return map;
+    }, {});
+
+    this.setState({
+      item: {
+        ...this.state.item,
+        photos: [...this.state.item.photos, ...Object.keys(map)]
+      },
+    });
+
+    for (const [url, file] of Object.entries(map)) {
+      const uploaded = await photos.upload(file);
+      this.setState({
+        item: {
+          ...this.state.item,
+          photos: this.state.item.photos.map(photo => {
+            if (photo !== url) return photo;
+            return `${config.cdn}/${uploaded.sizes[2]}`;
+          }),
+        },
+      });
+    }
+  }
+
   render() {
     const {loading, saving, item} = this.state;
 
@@ -79,35 +107,6 @@ export default class ProductDetails extends Component {
         [field]: parse(event.target.value, event.target, event),
       },
     });
-
-    const updatePhotos = async e => {
-      const files = Array.from(e.target.files);
-      const map = files.reduce((map, file) => {
-        map[window.URL.createObjectURL(file)] = file;
-        return map;
-      }, {});
-
-      this.setState({
-        item: {
-          ...this.state.item,
-          photos: [...this.state.item.photos, ...Object.keys(map)]
-        },
-      });
-
-      for (const [url, file] of Object.entries(map)) {
-        const uploaded = await photos.upload(file);
-        this.setState({
-          item: {
-            ...this.state.item,
-            photos: this.state.item.photos.map(photo => {
-              if (photo !== url) return photo;
-              return `${config.cdn}/${uploaded.sizes[2]}`;
-            }),
-          },
-        });
-      }
-
-    };
 
     const addTag = tag => {
       this.setState({
@@ -186,7 +185,7 @@ export default class ProductDetails extends Component {
               }
               <li className='product-details--photo-item'>
                 <label className='product-details--uploader'>
-                  <input accept='image/*' type='file' onChange={updatePhotos} />
+                  <input accept='image/*' type='file' onChange={e => this.uploadPhotos(e)} />
                   <div>Válassz egy képet!</div>
                 </label>
               </li>
