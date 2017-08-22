@@ -25,7 +25,10 @@ export default class ProductDetails extends Component {
   _accept(item) {
     const id = this.state.item && this.state.item.id;
     this.setState({
-      item,
+      item: {
+        ...item,
+        photos: item.photos.map(photo => `${config.cdn}/${photo.original}`),
+      },
       loading: false,
       saving: false,
     }, () => {
@@ -78,6 +81,7 @@ export default class ProductDetails extends Component {
 
     for (const [url, file] of Object.entries(map)) {
       const uploaded = await photos.upload(file);
+      await products.addPhoto(this.state.item, uploaded);
       this.setState({
         item: {
           ...this.state.item,

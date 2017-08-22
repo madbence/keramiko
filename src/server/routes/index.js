@@ -27,5 +27,7 @@ export default compose([
   put('/api/v1/products/:id', products.update),
   post('/api/v1/products', products.create),
 
+  post('/api/v1/products/:id/photos', products.addPhoto),
+
   post('/api/v1/photos', photos.upload),
 ]);

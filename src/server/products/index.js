@@ -7,13 +7,17 @@ function parse(row) {
     price: row.price,
     description: row.description,
     published: row.published,
+    photos: row.photos ? row.photos.filter(Boolean).map(photo => ({
+      id: photo.id,
+      original: photo.original,
+    })) : undefined,
     createdAt: row.createdAt,
     updatedAt: row.updatedAt,
   };
 }
 
 export const getById = async id => {
-  const res = await db.query('select * from products where id = $1', [id]);
+  const res = await db.query('select p.*, json_agg(ph.*) photos from products p left join "productPhotos" pp on (pp."productId" = p.id) left join photos ph on (pp."photoId" = ph.id) where p.id = $1 group by p.id', [id]);
   return parse(res.rows[0]);
 };
 
@@ -45,3 +49,10 @@ export const update = async product => {
 
   return getById(product.id);
 }
+
+export const addPhoto = (productId, photoId) => {
+  return db.query('insert into "productPhotos" ("productId", "photoId") values ($1, $2)', [
+    productId,
+    photoId,
+  ]);
+};

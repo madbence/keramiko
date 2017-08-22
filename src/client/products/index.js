@@ -12,7 +12,7 @@ const parse = item => ({
   description: item.description,
   published: item.published,
   tags: [],
-  photos: [],
+  photos: item.photos,
 });
 
 export const fetch = async id => {
@@ -25,23 +25,30 @@ export const fetch = async id => {
 };
 
 export const save = async item => {
+  let res;
   if (!item.id) {
-    const res = await post('/products', {
+    res = await post('/products', {
       name: item.name,
       price: item.price,
       description: item.description,
       published: item.published,
     });
-    return parse(res);
   } else {
-    const res = await put('/products/' + item.id, {
+    res = await put('/products/' + item.id, {
       name: item.name,
       price: item.price,
       description: item.description,
       published: item.published,
     });
-    return parse(res);
   }
+
+  return parse(res);
 }
+
+export const addPhoto = async (item, photo) => {
+  await post('/products/' + item.id + '/photos', {
+    photoId: photo.id,
+  });
+};
 
 export {List, Details};
