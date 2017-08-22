@@ -24,7 +24,11 @@ export default class ProductDetails extends Component {
 
   _accept(item) {
     const id = this.state.item && this.state.item.id;
-    this.setState({item}, () => {
+    this.setState({
+      item,
+      loading: false,
+      saving: false,
+    }, () => {
       if (id !== item.id) {
         this.router.push(`/products/${item.id}`);
       }
@@ -35,7 +39,6 @@ export default class ProductDetails extends Component {
     this.setState({loading: true});
     const item = await products.fetch(id);
     this._accept(item);
-    this.setState({loading: false});
   }
 
   async componentWillReceiveProps(props) {
@@ -50,7 +53,6 @@ export default class ProductDetails extends Component {
       this.load(this.props.id);
     } else {
       this._accept(createEmpty());
-      this.setState({loading: false});
     }
   }
 
@@ -58,7 +60,6 @@ export default class ProductDetails extends Component {
     this.setState({saving: true});
     const item = await products.save(this.state.item);
     this._accept(item);
-    this.setState({saving: false});
   }
 
   async uploadPhotos(e) {
