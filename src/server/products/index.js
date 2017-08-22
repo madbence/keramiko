@@ -12,17 +12,17 @@ function parse(row) {
   };
 }
 
-export const getProductById = async id => {
+export const getById = async id => {
   const res = await db.query('select * from products where id = $1', [id]);
   return parse(res.rows[0]);
 };
 
-export const getProducts = async () => {
+export const list = async () => {
   const res = await db.query('select * from products order by id asc');
   return res.rows.map(parse);
 };
 
-export const createProduct = async product => {
+export const create = async product => {
   const res = await db.query('insert into products (name, price, description, published) values ($1, $2, $3, $4) returning id', [
     product.name,
     product.price,
@@ -31,10 +31,10 @@ export const createProduct = async product => {
   ]);
   const id = res.rows[0].id;
 
-  return getProductById(id);
+  return getById(id);
 }
 
-export const updateProduct = async product => {
+export const update = async product => {
   await db.query('update products set name = $1, price = $2, description = $3, published = $4, "updatedAt" = now() where id = $5', [
     product.name,
     product.price,
@@ -43,5 +43,5 @@ export const updateProduct = async product => {
     product.id,
   ]);
 
-  return getProductById(product.id);
+  return getById(product.id);
 }
