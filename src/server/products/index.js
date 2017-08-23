@@ -22,7 +22,7 @@ export const getById = async id => {
 };
 
 export const list = async () => {
-  const res = await db.query('select * from products order by id asc');
+  const res = await db.query('select p.*, json_agg(ph.*) photos from products p left join "productPhotos" pp on (pp."productId" = p.id) left join photos ph on (pp."photoId" = ph.id) group by p.id order by p.id asc');
   return res.rows.map(parse);
 };
 

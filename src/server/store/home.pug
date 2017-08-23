@@ -1,0 +1,13 @@
+extends layout.pug
+
+block content
+  h1 Kiemelt termékek
+  ul.product-list
+    each product in products
+      li.product-list--item
+        a
+          img(src=product.thumbnail).product-list--thumbnail
+          .product-list--details
+            h2.product-list--name= product.name
+            .procut-list--price= product.price
+

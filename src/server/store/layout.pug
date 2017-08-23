@@ -1,0 +1,26 @@
+doctype html
+html
+  head
+    title Keramiko
+    meta(name='viewport', content='width=device-width,initial-scale=1,user-scalable=no')
+    link(rel='stylesheet', href='/bundle.css')
+  body
+    .wrapper
+      header.header
+        .header--nav-toggler
+          .icon!= icons['bars']
+        .header--logo Keramiko
+        .header--cart-toggler
+          .icon!= icons['shopping-cart']
+        hr.header--separator
+        nav.header--nav
+          ul
+            li.header--nav-item: a(href='/') Főoldal
+            li.header--nav-item: a(href='/products') Termékek
+            li.header--nav-item: a(href='https://keramiko.blogspot.hu') Blog
+            li.header--nav-item: a(href='/about') Rólam
+      main
+        block content
+      footer
+    script.
+      document.querySelector('.header--nav-toggler').addEventListener('click', () => document.body.classList.toggle('js-nav-open'));
