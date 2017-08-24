@@ -4,8 +4,8 @@ import {renderFile} from 'pug';
 import serve from '../middlewares/file';
 import * as products from '../products';
 import config from '../config';
-import bars from '../../client/icons/bars';
-import shoppingCart from '../../client/icons/shopping-cart';
+import menu from '../../client/icons/menu';
+import cart from '../../client/icons/cart';
 
 const format = n => n.toString().split('').reverse().join('').replace(/(\d{3})/g, '$1 ').split('').reverse().join('') + ' Ft';
 
@@ -21,10 +21,7 @@ export default compose([
         thumbnail: item.photos && item.photos[0] ? config.cdn + '/' + item.photos[0].original : 'http://placehold.it/180x240',
         url: item.url,
       })),
-      icons: {
-        bars: bars,
-        'shopping-cart': shoppingCart,
-      },
+      icons: {menu, cart},
     });
   }),
 ]);
