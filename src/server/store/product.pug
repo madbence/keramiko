@@ -1,0 +1,8 @@
+extends layout.pug
+
+block content
+  h1= product.name
+    img(src=product.thumbnail).product-list--thumbnail
+    .product--details
+      h2.product--price= product.name
+      .product--description= product.description

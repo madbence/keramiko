@@ -11,7 +11,24 @@ const format = n => n.toString().split('').reverse().join('').replace(/(\d{3})/g
 
 export default compose([
   serve('/bundle.css', './public/store.css', 'text/css'),
-  get('/*', async ctx => {
+  get('/products/:id-*', async (ctx, id) => {
+    const product = await products.getById(+id);
+
+    if (!product) {
+      return;
+    }
+
+    ctx.body = renderFile('./src/server/store/product.pug', {
+      pretty: true,
+      product: {
+        name: product.name,
+        price: format(product.price),
+        description: product.description,
+      },
+      icons: {menu, cart},
+    });
+  }),
+  get('/', async ctx => {
     const list = await products.list();
     ctx.body = renderFile('./src/server/store/home.pug', {
       pretty: true,
