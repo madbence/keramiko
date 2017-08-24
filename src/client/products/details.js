@@ -61,8 +61,13 @@ export default class ProductDetails extends Component {
 
   async save() {
     this.setState({saving: true});
-    const item = await products.save(this.state.item);
-    this._accept(item);
+    try {
+      const item = await products.save(this.state.item);
+      this._accept(item);
+    } catch (err) {
+      this.context.showError(err);
+      this.setState({saving: false});
+    }
   }
 
   async uploadPhotos(e) {
