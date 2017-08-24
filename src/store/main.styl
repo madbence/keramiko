@@ -13,7 +13,7 @@ ul
 body
   font-size 16px
   color #666
-  line-height 1.4em
+  line-height 1.5
   font-family 'Raleway', sans-serif
   font-weight 300
   overflow-x hidden
@@ -165,3 +165,68 @@ h1
   &--name
     font-size 1.2em
     line-height 1em
+
+.promo
+  text-align center
+
+  &--title
+    font-size 1.3em
+    padding $gutter $gutter ($gutter/2) $gutter
+  &--content
+    padding 0 $gutter ($gutter/2) $gutter
+
+.footer
+  display flex
+  flex-direction column
+  text-align center
+  padding 0 ($gutter/2)
+
+  +above(800px)
+    flex-direction row
+    text-align left
+
+.about
+  padding 0 ($gutter/2)
+  +above(800px)
+    flex 3
+
+  &--title
+    font-size 1.2em
+    padding $gutter 0 ($gutter/2) 0
+  &--content
+    padding 0 0 ($gutter/2) 0
+    font-weight 300
+
+.connect
+  padding 0 ($gutter/2)
+  +above(800px)
+    flex 2
+
+  &--title
+    font-size 1.2em
+    padding $gutter 0 ($gutter/2) 0
+
+  &--newsletter
+    display flex
+    justify-content center
+    +above(800px)
+      justify-content flex-start
+
+    input
+      display block
+      font-family 'Raleway', sans-serif
+      font-size 18px
+      font-weight 300
+      border 1px solid #ddd
+      padding ($gutter/2)
+      height 48px
+      background #fafafa
+      color #888
+    button
+      width 48px
+      height 48px
+      border 1px solid #ddd
+      border-left 0
+      background #fafafa
+      &:hover
+        background #f6f6f6
