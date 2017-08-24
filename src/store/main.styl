@@ -60,7 +60,7 @@ above(size)
 .header
   height 60px
   display flex
-  border-bottom 1px solid #ccc
+  border-bottom 1px solid #ddd
 
   .icon
     width 20px
@@ -115,10 +115,10 @@ above(size)
     &--logo
       height 60px
       flex 0 0 auto
-      margin-top $gutter
+      margin $gutter 0 $gutter 0
     &--separator
       display block
-      margin 10px 60px
+      margin 0 60px $gutter 60px
       border-bottom 1px solid #aaa
     &--nav
       position static
@@ -132,15 +132,26 @@ above(size)
 
 h1
   font-size 1.4em
-  line-height 1em
-  text-align center
   letter-spacing .2em
-  padding $gutter 0 ($gutter/2) 0
 
 .product-list
   padding 0 ($gutter/2);
-  display flex
-  flex-wrap wrap
+
+  &--title
+    text-align center
+    padding $gutter 0 ($gutter/2) 0
+    display flex
+    justify-content center
+    align-items center
+
+    +above(800px)
+      height 60px
+      margin $gutter 0 ($gutter/2) 0
+      padding 0
+
+  &--list
+    display flex
+    flex-wrap wrap
 
   &--item
     display block

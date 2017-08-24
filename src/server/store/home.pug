@@ -1,15 +1,16 @@
 extends layout.pug
 
 block content
-  h1 Kiemelt termékek
-  ul.product-list
-    each product in products
-      li.product-list--item
-        a(href='/products/' + product.url)
-          img(src=product.thumbnail).product-list--thumbnail
-          .product-list--details
-            h2.product-list--name= product.name
-            .procut-list--price= product.price
+  .product-list
+    h1.product-list--title Kiemelt termékek
+    ul.product-list--list
+      each product in products
+        li.product-list--item
+          a(href='/products/' + product.url)
+            img(src=product.thumbnail).product-list--thumbnail
+            .product-list--details
+              h2.product-list--name= product.name
+              .procut-list--price= product.price
   .promo
     h3.promo--title Lorem ipsum
     p.promo--content Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse fermentum varius dolor. Donec porta dolor quam, vitae commodo nulla tempus at. Integer elementum risus id placerat euismod. In dignissim elementum magna. Vivamus mollis nunc sit amet quam venenatis, eu interdum nibh volutpat. Praesent orci mi, pharetra vel erat quis, vehicula fermentum eros. Donec vulputate mi placerat vestibulum malesuada. Fusce malesuada rhoncus risus sed egestas. Nam sed massa dolor. Phasellus pellentesque interdum magna vel semper. Phasellus quis accumsan nunc, a auctor magna. Duis sed nulla diam.
