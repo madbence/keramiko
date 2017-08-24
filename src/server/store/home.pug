@@ -5,7 +5,7 @@ block content
   ul.product-list
     each product in products
       li.product-list--item
-        a
+        a(href='/products/' + product.url)
           img(src=product.thumbnail).product-list--thumbnail
           .product-list--details
             h2.product-list--name= product.name

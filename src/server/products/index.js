@@ -1,5 +1,17 @@
 import db from '../db';
 
+const slugify = str => str.toLowerCase().replace(/./g, char => {
+  switch (char) {
+    case 'ö': case 'ó': case 'ő': return 'o';
+    case 'ú': case 'ü': case 'ű': return 'u';
+    case 'á': return 'a';
+    case 'é': return 'e';
+    case 'í': return 'i';
+    case ' ': return '-';
+    default: return char;
+  }
+});
+
 function parse(row) {
   return {
     id: row.id,
@@ -11,6 +23,7 @@ function parse(row) {
       id: photo.id,
       original: photo.original,
     })) : undefined,
+    url: row.id + '-' + slugify(row.name),
     createdAt: row.createdAt,
     updatedAt: row.updatedAt,
   };

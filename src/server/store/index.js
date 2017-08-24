@@ -19,6 +19,7 @@ export default compose([
         name: item.name,
         price: format(item.price),
         thumbnail: item.photos && item.photos[0] ? config.cdn + '/' + item.photos[0].original : 'http://placehold.it/180x240',
+        url: item.url,
       })),
       icons: {
         bars: bars,
