@@ -78,7 +78,13 @@ export const getById = async id => {
 };
 
 export const list = async () => {
-  const res = await db.query('select p.*, json_agg(ph.*) photos from products p left join "productPhotos" pp on (pp."productId" = p.id) left join photos ph on (pp."photoId" = ph.id) group by p.id order by p.id asc');
+  const res = await db.query(`
+    select
+      p.*,
+      (select json_agg(ph.*) from photos ph left join "productPhotos" pp on (ph.id = pp."photoId") where pp."productId" = p.id) photos,
+      (select json_agg(t.name) from tags t left join "productTags" pt on (t.id = pt."tagId") where pt."productId" = p.id) tags
+    from products p
+  `);
   return res.rows.map(parse);
 };
 
