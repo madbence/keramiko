@@ -84,6 +84,7 @@ export const list = async () => {
       (select json_agg(ph.*) from photos ph left join "productPhotos" pp on (ph.id = pp."photoId") where pp."productId" = p.id) photos,
       (select json_agg(t.name) from tags t left join "productTags" pt on (t.id = pt."tagId") where pt."productId" = p.id) tags
     from products p
+    order by id asc
   `);
   return res.rows.map(parse);
 };
