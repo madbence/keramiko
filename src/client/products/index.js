@@ -11,7 +11,7 @@ const parse = item => ({
   price: item.price,
   description: item.description,
   published: item.published,
-  tags: [],
+  tags: item.tags || [],
   photos: item.photos,
 });
 
@@ -32,6 +32,7 @@ export const save = async item => {
       price: item.price,
       description: item.description,
       published: item.published,
+      tags: item.tags,
     });
   } else {
     res = await put('/products/' + item.id, {
@@ -39,6 +40,7 @@ export const save = async item => {
       price: item.price,
       description: item.description,
       published: item.published,
+      tags: item.tags,
     });
   }
 

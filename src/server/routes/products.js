@@ -8,6 +8,7 @@ export const create = async ctx => {
     price: body.price,
     description: body.description,
     published: body.published,
+    tags: body.tags,
   });
 };
 
@@ -19,6 +20,7 @@ export const update = async (ctx, id) => {
     price: body.price,
     description: body.description,
     published: body.published,
+    tags: body.tags,
   });
 };
 

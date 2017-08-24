@@ -23,14 +23,57 @@ function parse(row) {
       id: photo.id,
       original: photo.original,
     })) : undefined,
+    tags: row.tags ? row.tags.filter(Boolean) : undefined,
     url: row.id + '-' + slugify(row.name),
     createdAt: row.createdAt,
     updatedAt: row.updatedAt,
   };
 }
 
+const saveTags = async (productId, tags) => {
+  const current = await db.query('select t.name, pt.id from tags t join "productTags" pt on (pt."tagId" = t.id) where pt."productId" = $1', [
+    productId,
+  ]);
+
+  for (const extraTag of current.rows.filter(r => !tags.includes(r.name))) {
+    await db.query('delete from "productTags" where id = $1', [
+      extraTag.id,
+    ]);
+  }
+
+  for (const tag of tags) {
+    const existing = await db.query('select * from tags where name = $1', [tag]);
+    let tagId;
+    if (!existing.rows.length) {
+      const res = await db.query('insert into tags (name) values ($1) returning id', [tag]);
+      tagId = res.rows[0].id;
+    } else {
+      tagId = existing.rows[0].id;
+    }
+
+    const duplicate = await db.query('select * from "productTags" where "tagId" = $1 and "productId" = $2', [
+      tagId,
+      productId,
+    ]);
+
+    if (duplicate.rows.length) continue;
+    await db.query('insert into "productTags" ("productId", "tagId") values ($1, $2)', [
+      productId,
+      tagId,
+    ]);
+  }
+}
+
 export const getById = async id => {
-  const res = await db.query('select p.*, json_agg(ph.*) photos from products p left join "productPhotos" pp on (pp."productId" = p.id) left join photos ph on (pp."photoId" = ph.id) where p.id = $1 group by p.id', [id]);
+  const res = await db.query(`
+    select
+      p.*,
+      (select json_agg(ph.*) from photos ph left join "productPhotos" pp on (ph.id = pp."photoId") where pp."productId" = p.id) photos,
+      (select json_agg(t.name) from tags t left join "productTags" pt on (t.id = pt."tagId") where pt."productId" = p.id) tags
+    from products p
+    where p.id = $1
+  `, [id]);
+
   return parse(res.rows[0]);
 };
 
@@ -48,6 +91,8 @@ export const create = async product => {
   ]);
   const id = res.rows[0].id;
 
+  await saveTags(id, product.tags);
+
   return getById(id);
 }
 
@@ -59,6 +104,8 @@ export const update = async product => {
     product.published,
     product.id,
   ]);
+
+  await saveTags(product.id, product.tags);
 
   return getById(product.id);
 }
