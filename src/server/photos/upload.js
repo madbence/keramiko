@@ -3,11 +3,19 @@ import {sha1, collect, writeFile} from './utils';
 import resize from './resize';
 import db from '../db';
 import config from '../config';
+import {getByName} from './';
 
 export default async function upload(stream, type) {
   const buffer = await collect(stream);
   const hash = await sha1(buffer);
   const name = hash.slice(0, 6) + '.' + type;
+
+  const existing = await getByName(name);
+
+  if (existing) {
+    return existing;
+  }
+
   const path = join(config.uploadDir, name);
 
   await writeFile(path, buffer);
@@ -23,11 +31,5 @@ export default async function upload(stream, type) {
     name,
   ]);
 
-  return {
-    id: res.rows[0].id,
-    hash,
-    type,
-    name,
-    sizes,
-  };
+  return getById(res.rows[0].id);
 }
