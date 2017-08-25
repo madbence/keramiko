@@ -103,7 +103,7 @@ above(size)
     height auto
     flex-direction column
     width (210 + $gutter * 2)px
-    padding-left $gutter
+    padding 0 $gutter
     position static
     &--nav-toggler, &--cart-toggler
       display none
@@ -139,7 +139,8 @@ above(size)
       padding 0
 
   &--list
-    padding 0 ($gutter/2);
+    margin-top -($gutter/2)
+    padding 0 ($gutter/2)
     display flex
     flex-wrap wrap
 
