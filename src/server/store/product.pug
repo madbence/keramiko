@@ -1,8 +1,11 @@
 extends layout.pug
 
 block content
-  h1= product.name
-    img(src=product.thumbnail).product-list--thumbnail
+  .product
+    h1.product--title= product.name
     .product--details
-      h2.product--price= product.name
-      .product--description= product.description
+      .product--preview
+        img(src=product.preview)
+      .product--details
+        .prodcut--price= product.price
+        .prodcut--description= product.description

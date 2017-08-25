@@ -23,6 +23,7 @@ export default compose([
       product: {
         name: product.name,
         price: format(product.price),
+        preview: product.photos && product.photos[0] ? config.cdn + '/' + product.photos[0].original : 'http://placehold.it/180x240',
         description: product.description,
       },
       icons: {menu, cart},
