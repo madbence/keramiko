@@ -7,6 +7,7 @@ const create = method => async (path, body) => {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
     },
+    credentials: 'include',
     body: JSON.stringify(body),
   });
 
@@ -28,6 +29,7 @@ export const put  = create('put')
 export const get = async path => {
   const res = await fetch('/api/v1' + path, {
     method: 'get',
+    credentials: 'include',
     headers: {
       'Accept': 'application/json',
     },
