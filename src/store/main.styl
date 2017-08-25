@@ -173,12 +173,19 @@ above(size)
   &--thumbnail
     width 100%
 
-  &--details
-    text-align center
-
   &--name
-    font-size 1.2rem
-    line-height 1em
+    text-align center
+    font-size 1.4rem
+    letter-spacing 0.1em
+    +above(800px)
+      font-size 1.2rem
+
+  &--price
+    display flex
+    align-items center
+    justify-content center
+    height ($gutter)
+    font-size 1em
 
 .promo
   text-align center
