@@ -1,6 +1,16 @@
 extends layout.pug
 
 block content
+  .carousel
+    ul.carousel--container
+      each n in [1, 2, 3, 4]
+        li.carousel--slide
+          img(src='https://placehold.it/320x240?text=' + n)
+    script.
+      var i = 0; setInterval(function () {
+        i = (i + 1) % 4;
+        document.querySelector('.carousel--container').style.transform = 'translate(' + (i * -100) +  '%, 0)'
+      }, 1000);
   .product-list
     h1.product-list--title Kiemelt termékek
     ul.product-list--list

@@ -127,6 +127,37 @@ above(size)
       transition color .2s
       &:hover
         color #888
+main
+  display flex
+  flex-direction column
+
+.carousel
+  overflow hidden
+  position relative
+  padding-bottom 75%
+
+  &--container
+    width 100%
+    display flex
+    position absolute
+    transform translate(0, 0)
+    transition transform .5s
+
+  &--slide
+    flex-shrink 0
+    position relative
+    width 100%
+    padding-bottom 75%
+    img
+      position absolute
+      top 0
+      left 0
+      width 100%
+
+  +above(1200px)
+    padding 0
+    width 1000px
+    height 750px
 
 .product-list
 
