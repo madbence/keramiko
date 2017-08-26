@@ -3,9 +3,14 @@ extends layout.pug
 block content
   .product
     h1.product--title= product.name
-    .product--details
+    .product--info
       .product--preview
         img(src=product.preview)
       .product--details
-        .prodcut--price= product.price
-        .prodcut--description= product.description
+        .product--price= product.price
+        .product--add-to-cart
+          input(value=1)
+          button
+            | Kosárba
+            != icons.cart
+        .product--description= product.description

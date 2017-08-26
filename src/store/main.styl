@@ -274,26 +274,35 @@ main
 
     input
       display block
-      font-family 'Raleway', sans-serif
-      font-size $font-size
-      font-weight 300
-      border 1px solid #ddd
-      border-radius 0
-      padding ($gutter/2)
-      height 48px
-      background #fafafa
-      color #888
       flex 1
-      -webkit-appearance none
 
     button
       width 48px
-      height 48px
-      border 1px solid #ddd
-      border-left 0
-      background #fafafa
-      &:hover
-        background #f6f6f6
+
+input
+  font-family 'Raleway', sans-serif
+  font-size $font-size
+  font-weight 300
+  border 1px solid #ddd
+  border-radius 0
+  padding ($gutter/2)
+  height 48px
+  background #fafafa
+  color #888
+  -webkit-appearance none
+
+button
+  font-family 'Raleway', sans-serif
+  font-size $font-size
+  font-weight 300
+  height 48px
+  border 1px solid #ddd
+  border-left 0
+  background #fafafa
+  color #888
+  padding ($gutter/2)
+  &:hover
+    background #f6f6f6
 
 .product
   &--title
@@ -310,3 +319,41 @@ main
     padding 0 $gutter
     img
       width 100%
+  &--price
+    padding ($gutter/2) $gutter
+    font-size 1.3rem
+    text-align center
+  &--description
+    padding ($gutter/2) $gutter
+    text-align center
+  &--add-to-cart
+    padding ($gutter/2) $gutter
+    display flex
+    input
+      flex 1
+    button
+      display flex
+      align-items center
+    svg
+      fill #888
+
+  +above(800px)
+    &--title
+      height 60px
+      margin $gutter
+    &--preview
+      flex 2
+      display flex
+      justify-content center
+      align-items center
+      img
+        width auto
+        max-width 100%
+        max-height 750px
+    &--details
+      flex 1
+    &--info
+      display flex
+      flex-direction row
+    &--price, &--description
+      text-align left
