@@ -3,7 +3,7 @@ import {sha1, collect, writeFile} from './utils';
 import resize from './resize';
 import db from '../db';
 import config from '../config';
-import {getByName} from './';
+import {getByName, getById} from './';
 
 export default async function upload(stream, type) {
   const buffer = await collect(stream);
