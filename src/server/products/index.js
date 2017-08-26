@@ -22,8 +22,8 @@ function parse(row) {
     photos: row.photos ? row.photos.filter(Boolean).map(photo => ({
       id: photo.id,
       original: photo.original,
-    })) : undefined,
-    tags: row.tags ? row.tags.filter(Boolean) : undefined,
+    })) : [],
+    tags: row.tags ? row.tags.filter(Boolean) : [],
     url: row.id + '-' + slugify(row.name),
     createdAt: row.createdAt,
     updatedAt: row.updatedAt,
