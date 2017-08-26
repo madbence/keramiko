@@ -30,7 +30,9 @@ export default compose([
     });
   }),
   get('/', async ctx => {
-    const list = await products.list();
+    const list = await products.list({
+      published: true,
+    });
     ctx.body = renderFile('./src/server/store/home.pug', {
       pretty: true,
       products: list.map(item => ({

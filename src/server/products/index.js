@@ -77,15 +77,26 @@ export const getById = async id => {
   return parse(res.rows[0]);
 };
 
-export const list = async () => {
+export const list = async (opts = {}) => {
+  const params = [];
+  const filters = [];
+  let i = 1;
+
+  for (const field of ['published']) {
+    if (opts[field] == null) continue;
+    filters.push(`p."${field}" = $${i}`);
+    params.push(opts[field]);
+  }
+
   const res = await db.query(`
     select
       p.*,
       (select json_agg(ph.*) from photos ph left join "productPhotos" pp on (ph.id = pp."photoId") where pp."productId" = p.id) photos,
       (select json_agg(t.name) from tags t left join "productTags" pt on (t.id = pt."tagId") where pt."productId" = p.id) tags
     from products p
+      ${filters.length ? 'where ' + filters.join(' and ') : ''}
     order by id asc
-  `);
+  `, params);
   return res.rows.map(parse);
 };
 
