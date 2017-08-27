@@ -14,7 +14,7 @@ const productFields = [
   f('id', 'ID'),
   f('name', 'Név'),
   f('published', 'Publikus', published => <Icon className={'product-list--item-status ' + (published ? 'product-list--item-status--published' : 'product-list--item-status--unpublished')} icon={published ? check : times} />),
-  f('description', 'Leírás'),
+  f('description', 'Leírás', description => description.slice(0, 75) + '...'),
   f('price', 'Ár', price => `${price} Ft`),
   f('tags', 'Címkék', tags => tags.join(', ')),
 ];
