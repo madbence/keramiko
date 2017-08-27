@@ -27,7 +27,10 @@ export default class ProductDetails extends Component {
     this.setState({
       item: {
         ...item,
-        photos: item.photos.map(photo => `${config.cdn}/${photo.original}`),
+        photos: item.photos.map(photo => ({
+          url: `${config.cdn}/${photo.original}`,
+          uploading: false,
+        })),
       },
       loading: false,
       saving: false,
@@ -80,7 +83,9 @@ export default class ProductDetails extends Component {
     this.setState({
       item: {
         ...this.state.item,
-        photos: [...this.state.item.photos, ...Object.keys(map)]
+        photos: [...this.state.item.photos, ...Object.keys(map).map(url => ({
+          url, uploading: true,
+        }))],
       },
     });
 
@@ -91,8 +96,11 @@ export default class ProductDetails extends Component {
         item: {
           ...this.state.item,
           photos: this.state.item.photos.map(photo => {
-            if (photo !== url) return photo;
-            return `${config.cdn}/${uploaded.sizes[2]}`;
+            if (photo.url !== url) return photo;
+            return {
+              url: `${config.cdn}/${uploaded.original}`,
+              uploading: false,
+            };
           }),
         },
       });
@@ -187,9 +195,9 @@ export default class ProductDetails extends Component {
           <div className='product-details--section'>
             <ul className='product-details--photo-list'>
               {
-                photos.map(url => (
-                  <li className='product-details--photo-item'>
-                    <img src={url} />
+                photos.map(photo => (
+                  <li className={'product-details--photo-item' + (photo.uploading ? ' product-details--photo-item--uploading' : '')}>
+                    <img src={photo.url} />
                   </li>
                 ))
               }
