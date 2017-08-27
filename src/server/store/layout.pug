@@ -19,6 +19,36 @@ html
             li.header--nav-item: a(href='/products') Termékek
             li.header--nav-item: a(href='https://bedoaniko.blogspot.hu') Blog
             li.header--nav-item: a(href='/about') Rólam
+        .cart
+          .cart--title A kosár tartalma
+          button.cart--login Bejelentkezés
+          script.
+            window.fbAsyncInit = function() {
+              FB.init({
+                appId      : '1920478241609647',
+                cookie     : true,
+                xfbml      : true,
+                version    : 'v2.8'
+              });
+              FB.getLoginStatus(function(response) {
+                console.log(response);
+              });
+              document.querySelector('.cart--login').addEventListener('click', () => {
+                FB.login(res => {
+                  FB.api('/me', res => {
+                    console.log(res);
+                  });
+                });
+              });
+            };
+
+            (function(d, s, id){
+               var js, fjs = d.getElementsByTagName(s)[0];
+               if (d.getElementById(id)) {return;}
+               js = d.createElement(s); js.id = id;
+               js.src = "//connect.facebook.net/en_US/sdk.js";
+               fjs.parentNode.insertBefore(js, fjs);
+             }(document, 'script', 'facebook-jssdk'));
       main
         block content
         footer.footer
@@ -43,6 +73,7 @@ html
 
     script.
       document.querySelector('.header--nav-toggler').addEventListener('click', () => document.body.classList.toggle('js-nav-open'));
+      document.querySelector('.header--cart-toggler').addEventListener('click', () => document.body.classList.toggle('js-cart-open'));
     script.
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

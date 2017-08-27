@@ -58,9 +58,25 @@ above(size)
 
   /.js-nav-open &
     transform translate(210px, 0)
+  /.js-cart-open &
+    transform translate(-80%, 0)
 
   +above(800px)
     flex-direction row
+
+.cart
+  width 80%
+  position fixed
+  left 100%
+  top 0
+
+  &--title
+    height ($gutter * 3)
+    letter-spacing .2rem
+    font-size 1.6rem
+    display flex
+    align-items center
+    justify-content center
 
 .header
   height ($gutter * 3)
