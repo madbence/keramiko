@@ -28,9 +28,9 @@ class App extends Component {
         {
           this.state.error
             ? <div className='error'>
-                <span className='error--message'>{this.state.error.message}</span>
-                <button onClick={() => this.setState({error: null})}>Bezár</button>
-              </div>
+              <span className='error--message'>{this.state.error.message}</span>
+              <button onClick={() => this.setState({error: null})}>Bezár</button>
+            </div>
             : null
         }
         <div className='navigation'>

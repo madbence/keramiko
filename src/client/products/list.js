@@ -51,7 +51,7 @@ export default class ProductList extends Component {
   render() {
     const {loading, items} = this.state;
 
-    let body = loading
+    const body = loading
       ? <li className='product-list--loader'>Betöltés...</li>
       : items.map(item => (
         <li className={'product-list--item' + (item.pending ? ' product-list--item--pending' : '')} onClick={() => this.router.push(`/products/${item.id}`)}>
@@ -67,7 +67,7 @@ export default class ProductList extends Component {
                 return {
                   ...item,
                   pending: true,
-                }
+                };
               }),
             });
             e.stopPropagation();

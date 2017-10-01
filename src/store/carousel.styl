@@ -1,0 +1,26 @@
+.carousel
+  overflow hidden
+  position relative
+  padding-bottom 75%
+
+  &--container
+    width 100%
+    display flex
+    position absolute
+    transform translate(0, 0)
+    transition transform .5s
+
+  &--slide
+    flex-shrink 0
+    position relative
+    width 100%
+    padding-bottom 75%
+    img
+      position absolute
+      top 0
+      left 0
+      width 100%
+
+  +above(1200px)
+    padding 0
+    height 750px

@@ -1,0 +1,22 @@
+if cart.length > 0
+  each item in cart
+    .cart--item
+      .cart--item-name= item.name
+      .cart--item-quantity #{item.quantity} db
+      .cart--item-price #{item.price * item.quantity} Ft
+      .icon.cart--item-remove(data-product-id=item.id, data-quantity=item.quantity)!= icons.trash
+  .cart--summary
+    .cart--summary-label Összesen
+    .cart--summary-amount #{cart.reduce((sum, item) => sum + item.price * item.quantity, 0)} Ft
+  .cart--notes
+    p.
+      A rendelés megerősítéséhez kérlek add meg az email címedet, ezen keresztül fogom felvenni a kapcsolatot veled.
+      A megrendelésről automatikus visszaigazoló emailt kapsz, ha utólag módosítani szeretnél rajta, vagy bármilyen kérdésed lenne a konkrét rendeléssel kapcsolatban, írj emailt!
+
+  .cart--order
+    textarea.cart--order-note(placeholder='Megjegyzések a rendeléshez')
+    .cart--order-new
+      input.cart--order-email(placeholder='Az email címed')
+      button.cart--order-button Rendelés véglegesítése
+else
+  .cart--empty A kosarad jelenleg üres!

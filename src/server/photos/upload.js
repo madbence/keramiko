@@ -10,11 +10,12 @@ export default async function upload(stream, type) {
   const hash = await sha1(buffer);
   const name = hash.slice(0, 6) + '.' + type;
 
+  await new Promise(resolve => setTimeout(resolve, 2000));
+
   const existing = await getByName(name);
 
-  if (existing) {
-    return existing;
-  }
+  if (existing) return existing;
+
 
   const path = join(config.uploadDir, name);
 

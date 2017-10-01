@@ -5,9 +5,8 @@ import config from './config';
 
 export default get('/*', (ctx, url) => {
   const match = url.match(/^(.*?)(-.*?)?\.(.*?)$/);
-  if (!match) {
-    return;
-  }
+  if (!match) return;
+
 
   const hash = match[1];
   const ext = match[3];

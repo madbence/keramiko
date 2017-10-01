@@ -8,10 +8,11 @@ html
     .wrapper
       header.header
         .header--nav-toggler
-          .icon!= icons.menu
+          .header--icon.icon!= icons.menu
         a.header--logo(href='/') Keramiko
         .header--cart-toggler
-          .icon!= icons.cart
+          .header--icon.icon!= icons.cart
+          a.header--cart-toggler-label Kosár (#{cart.reduce((sum, item) => sum + item.quantity, 0)})
         hr.header--separator
         nav.header--nav
           ul
@@ -21,34 +22,8 @@ html
             li.header--nav-item: a(href='/about') Rólam
         .cart
           .cart--title A kosár tartalma
-          button.cart--login Bejelentkezés
-          script.
-            window.fbAsyncInit = function() {
-              FB.init({
-                appId      : '1920478241609647',
-                cookie     : true,
-                xfbml      : true,
-                version    : 'v2.8'
-              });
-              FB.getLoginStatus(function(response) {
-                console.log(response);
-              });
-              document.querySelector('.cart--login').addEventListener('click', () => {
-                FB.login(res => {
-                  FB.api('/me', res => {
-                    console.log(res);
-                  });
-                });
-              });
-            };
-
-            (function(d, s, id){
-               var js, fjs = d.getElementsByTagName(s)[0];
-               if (d.getElementById(id)) {return;}
-               js = d.createElement(s); js.id = id;
-               js.src = "//connect.facebook.net/en_US/sdk.js";
-               fjs.parentNode.insertBefore(js, fjs);
-             }(document, 'script', 'facebook-jssdk'));
+          .cart--items
+            include cart.pug
       main
         block content
         footer.footer
@@ -74,11 +49,55 @@ html
     script.
       document.querySelector('.header--nav-toggler').addEventListener('click', () => document.body.classList.toggle('js-nav-open'));
       document.querySelector('.header--cart-toggler').addEventListener('click', () => document.body.classList.toggle('js-cart-open'));
-    script.
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+      const cart = document.querySelector('.cart');
+      cart.addEventListener('click', e => {
+        let target = e.target;
+        while(target && target !== cart && !target.matches('.cart--item-remove')) target = target.parentNode;
+        if (target === cart || !target) return;
+        fetch('/cart/remove', {
+          method: 'post',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({productId: +target.dataset.productId, quantity: +target.dataset.quantity}),
+        }).then(res => res.text()).then(res => {
+          document.querySelector('.cart--items').innerHTML = res;
+          document.querySelector('.header--cart-toggler-label').innerText = 'Kosár (' + document.querySelectorAll('.cart--item').length + ')';
+        });
+      });
 
-      ga('create', 'UA-105309213-1', 'auto');
-      ga('send', 'pageview');
+      function onClick(selector, target, fn) {
+        const el = document.querySelector(selector);
+        el.addEventListener('click', e => {
+          let t = e.target;
+          while (t && t !== el && !t.matches(target)) t = t.parentNode;
+          if (!t || t === el) return;
+          fn(e, t);
+        });
+      }
+
+      onClick('.cart', '.cart--order-button', () => {
+        const email = document.querySelector('.cart--order-email').value;
+        fetch('/orders', {
+          method: 'post',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({email: email, note: document.querySelector('.cart--order-note').value})
+        }).then(res => res.json()).then(res => {
+          if (res.ok) {
+            document.querySelector('.cart--order').innerHTML = '<div class="cart--order-success">A megrendelésedet a(z) ' + email + ' címre felvettük, köszönjük! A további részletekről (rendelés elkészülésének várható időpontja, stb) email-ben fogsz tájékoztatást kapni!</div>';
+          }
+        });
+      })
+    if config.services['google-analytics']
+      script.
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+        ga('create', '!{config.services['google-analytics']}', 'auto');
+        ga('send', 'pageview');

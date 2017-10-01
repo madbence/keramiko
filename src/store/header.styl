@@ -1,0 +1,89 @@
+.header
+  height ($gutter * 3)
+  display flex
+  border-bottom 1px solid #ddd
+
+  &--icon
+    width $gutter
+    height $gutter
+
+  &--nav-toggler, &--cart-toggler
+    display flex
+    align-items center
+    justify-content center
+    width ($gutter * 3)
+
+  &--cart-toggler-label
+    display none
+
+  &--logo
+    flex 2
+    letter-spacing .4rem
+    font-size 1.6rem
+    display flex
+    align-items center
+    justify-content center
+
+  &--header-separator
+    display none
+
+  &--nav
+    position fixed
+    top 0
+    left -210px
+    width 210px
+
+  &--nav-item a
+    display flex
+    align-items center
+    padding-left $gutter
+    height ($gutter * 3)
+    font-size 1.2rem
+    letter-spacing .1rem
+    border-bottom 1px solid #ddd
+
+  +above(800px)
+    height auto
+    flex-direction column
+    width (210 + $gutter * 2)px
+    padding 0 $gutter
+    position static
+
+    &--nav-toggler
+      display none
+
+    &--cart-toggler
+      width auto
+      font-weight 600
+      display flex
+      justify-content center
+      align-content center
+      height $gutter*3
+      cursor pointer
+      &-label
+        display inline
+
+    &--logo
+      height 60px
+      flex 0 0 auto
+      margin $gutter 0 $gutter 0
+
+    &--separator
+      display block
+      margin ($gutter / 2) 60px
+      border-bottom 1px solid #aaa
+
+    &--nav
+      position static
+      display block
+
+    &--nav-item a
+      font-size 1.1rem
+      letter-spacing 0.1rem
+      padding 0
+      justify-content center
+      border none
+      transition color .2s
+
+      &:hover
+        color #888

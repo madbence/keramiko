@@ -7,9 +7,8 @@ export const upload = async file => {
   req.open('POST', '/api/v1/photos');
   await new Promise((resolve, reject) => {
     req.addEventListener('load', () => {
-      if (req.status === 200) {
-        return resolve();
-      }
+      if (req.status === 200) return resolve();
+
       reject();
     });
     req.send(form);

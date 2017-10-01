@@ -21,17 +21,17 @@ const create = method => async (path, body) => {
   }
 
   return res.json();
-}
+};
 
 export const post = create('post');
-export const put  = create('put')
+export const put  = create('put');
 
 export const get = async path => {
   const res = await fetch('/api/v1' + path, {
     method: 'get',
     credentials: 'include',
     headers: {
-      'Accept': 'application/json',
+      Accept: 'application/json',
     },
   });
 

@@ -45,7 +45,7 @@ export const save = async item => {
   }
 
   return parse(res);
-}
+};
 
 export const addPhoto = async (item, photo) => {
   await post('/products/' + item.id + '/photos', {

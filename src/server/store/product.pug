@@ -14,3 +14,18 @@ block content
             | Kosárba
             != icons.cart
         .product--description= product.description
+  script.
+    document.querySelector('.product--add-to-cart button').addEventListener('click', function () {
+      fetch('/cart/add', {
+        method: 'post',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify({productId: !{product.id}, quantity: +document.querySelector('.product--add-to-cart input').value}),
+      }).then(res => res.text()).then(res => {
+        document.querySelector('.cart--items').innerHTML = res;
+        document.querySelector('.header--cart-toggler-label').innerText = 'Kosár (' + document.querySelectorAll('.cart--item').length + ')';
+      });
+    });

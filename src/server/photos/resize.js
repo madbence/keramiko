@@ -24,4 +24,4 @@ export default async (file, width) => {
   await writeFile(join(dir, name), buffer);
 
   return name;
-}
+};

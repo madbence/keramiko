@@ -47,9 +47,8 @@ const saveTags = async (productId, tags) => {
     if (!existing.rows.length) {
       const res = await db.query('insert into tags (name) values ($1) returning id', [tag]);
       tagId = res.rows[0].id;
-    } else {
-      tagId = existing.rows[0].id;
-    }
+    } else tagId = existing.rows[0].id;
+
 
     const duplicate = await db.query('select * from "productTags" where "tagId" = $1 and "productId" = $2', [
       tagId,
@@ -62,7 +61,7 @@ const saveTags = async (productId, tags) => {
       tagId,
     ]);
   }
-}
+};
 
 export const getById = async id => {
   const res = await db.query(`
@@ -80,7 +79,7 @@ export const getById = async id => {
 export const list = async (opts = {}) => {
   const params = [];
   const filters = [];
-  let i = 1;
+  const i = 1;
 
   for (const field of ['published']) {
     if (opts[field] == null) continue;
@@ -112,7 +111,7 @@ export const create = async product => {
   await saveTags(id, product.tags);
 
   return getById(id);
-}
+};
 
 export const update = async product => {
   await db.query('update products set name = $1, price = $2, description = $3, published = $4, "updatedAt" = now() where id = $5', [
@@ -126,11 +125,9 @@ export const update = async product => {
   await saveTags(product.id, product.tags);
 
   return getById(product.id);
-}
-
-export const addPhoto = (productId, photoId) => {
-  return db.query('insert into "productPhotos" ("productId", "photoId") values ($1, $2)', [
-    productId,
-    photoId,
-  ]);
 };
+
+export const addPhoto = (productId, photoId) => db.query('insert into "productPhotos" ("productId", "photoId") values ($1, $2)', [
+  productId,
+  photoId,
+]);

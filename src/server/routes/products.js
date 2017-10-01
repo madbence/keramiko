@@ -36,4 +36,4 @@ export const addPhoto = async (ctx, id) => {
   const body = await json(ctx.req);
   await products.addPhoto(id, body.photoId);
   ctx.body = {ok: true};
-}
+};

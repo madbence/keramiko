@@ -17,9 +17,8 @@ export const upload = async ctx => {
     ctx.req.pipe(bus);
   });
 
-  if (!bus._finished) {
-    await new Promise(resolve => bus.once('finish', resolve));
-  }
+  if (!bus._finished) await new Promise(resolve => bus.once('finish', resolve));
+
 
   ctx.body = file;
 };
