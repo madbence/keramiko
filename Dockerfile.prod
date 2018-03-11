@@ -1,0 +1,14 @@
+FROM node:9-alpine AS builder
+RUN apk update && apk add git
+WORKDIR /opt/app
+COPY package.json ./
+RUN npm i && mkdir build
+COPY src ./src
+RUN node_modules/.bin/babel -d build --source-maps inline src/server
+
+FROM node:9-alpine
+WORKDIR /opt/app
+COPY package.json ./
+RUN npm i --production
+COPY --from=builder /opt/app/build ./build
+CMD ["node", "build/keramiko/app"]
