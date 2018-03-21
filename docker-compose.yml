@@ -1,0 +1,19 @@
+version: '3'
+services:
+  web:
+    build:
+      dockerfile: Dockerfile.dev
+      context: .
+    volumes:
+      - .:/opt/app
+      - node_modules:/opt/app/node_modules
+    ports:
+      - 3000:3000
+    environment:
+      PGHOST: db
+      PGUSER: postgres
+  db:
+    image: postgres:alpine
+
+volumes:
+  node_modules:
