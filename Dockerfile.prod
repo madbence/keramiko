@@ -2,7 +2,7 @@ FROM node:9-alpine AS builder
 RUN apk update && apk add git
 WORKDIR /opt/app
 COPY package.json ./
-RUN npm i && mkdir build
+RUN npm i
 COPY src ./src
 RUN node_modules/.bin/babel -d build --source-maps inline src/server
 
