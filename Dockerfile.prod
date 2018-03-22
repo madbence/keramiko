@@ -1,16 +1,35 @@
 FROM node:9-alpine AS builder
-RUN apk update && apk add git
+
+# the app lives in /opt/app
 WORKDIR /opt/app
+
+# git is needed for some dependencies
+RUN apk update && apk add git
+
+# install dependencies
+# thanks to caching, dependencies will be only reinstalled, when package.json or package-lock.json is changed
 COPY package.json ./
 COPY package-lock.json ./
 RUN npm i
+
+# build the actual app
 COPY src ./src
 RUN node_modules/.bin/babel -d build --source-maps inline src/server
 
+
+# actual production image
 FROM node:9-alpine
+
+# the app lives in /opt/app
 WORKDIR /opt/app
+
+# install production dependencies
 COPY package.json ./
 COPY package-lock.json ./
 RUN npm i --production
+
+# copy the compiled code from the previous stage
 COPY --from=builder /opt/app/build ./build
+
+# the compiled app can be started with `node`
 CMD ["node", "build/keramiko/app"]
