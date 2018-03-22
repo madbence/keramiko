@@ -1,0 +1,21 @@
+{
+  "presets": [
+    ["@babel/preset-env", {
+      "targets": {
+        "node": "current"
+      }
+    }],
+    "@babel/preset-react"
+  ],
+  "plugins": [
+    ["module-resolver", {
+      "src": ["./src/server"],
+      "alias": {
+        "keramiko": "./src/server/keramiko",
+        "common": "./src/server/common"
+      }
+    }],
+    "@babel/plugin-proposal-class-properties",
+    "@babel/plugin-proposal-object-rest-spread"
+  ]
+}
