@@ -1,0 +1,4 @@
+{
+  "extends": "lennon",
+  "parser": "babel-eslint",
+}
