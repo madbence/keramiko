@@ -1,5 +1,5 @@
-import {watch} from 'chokidar';
 import {spawn} from 'child_process';
+import {watch} from 'chokidar';
 import logger from 'keramiko/logger';
 
 const log = logger.child('chokidar');
@@ -13,7 +13,7 @@ async function start(reason) {
   if (proc && !proc.terminated) {
     log.debug('killing existing process...');
     proc.kill('SIGINT');
-    const [code, signal] = await new Promise(resolve => {
+    await new Promise(resolve => {
       proc.once('exit', (code, signal) => resolve([code, signal]));
     });
   }
@@ -24,10 +24,10 @@ async function start(reason) {
 
   proc.once('exit', (code, signal) => {
     proc.terminated = true;
-    if (code != null) {
-      log.error(`PID ${proc.pid} exited with code ${code}`);
-    } else {
+    if (code == null) {
       log.debug(`PID ${proc.pid} exited, because it received ${signal}`);
+    } else {
+      log.error(`PID ${proc.pid} exited with code ${code}`);
     }
   });
 
@@ -37,4 +37,4 @@ async function start(reason) {
 watcher
   .on('change', path => start(`restarting server, because ${path} changed`));
 
-start('bootstrapping server')
+start('bootstrapping server');

@@ -3,6 +3,8 @@ import {create} from 'common/logger';
 export default create({
   handler: record => {
     record.date = new Date();
+
+    // eslint-disable-next-line no-console
     console.log(`[${record.date.toISOString()}][${record.name}][${record.level}] ${record.message}`);
   },
 

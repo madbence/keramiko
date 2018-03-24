@@ -11,8 +11,9 @@ function createRecord(context, message) {
   } else if (context instanceof Error) {
     return {error: context};
   }
+  context.message = message;
   return context;
-};
+}
 
 export function create(opts) {
   const logger = {};
@@ -31,15 +32,13 @@ export function create(opts) {
     };
   }
 
-  logger.child = name => {
-    return create({
-      ...opts,
-      context: {
-        ...context,
-        name,
-      },
-    });
-  };
+  logger.child = name => create({
+    ...opts,
+    context: {
+      ...context,
+      name,
+    },
+  });
 
   return logger;
-};
+}
