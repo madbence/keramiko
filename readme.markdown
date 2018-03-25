@@ -1,4 +1,4 @@
-# keramiko app
+# keramiko app [![ci status][badge]][ci]
 
 ## development
 
@@ -23,3 +23,6 @@ $ docker run -d keramiko
 ## license
 
 MIT
+
+[badge]: https://img.shields.io/circleci/project/github/madbence/keramiko.svg
+[ci]: https://circleci.com/gh/madbence/keramiko
