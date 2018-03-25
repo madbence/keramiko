@@ -1,0 +1,4 @@
+extends: lennon
+parser: babel-eslint
+settings:
+  import/resolver: babel-module
