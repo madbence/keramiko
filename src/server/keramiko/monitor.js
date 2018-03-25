@@ -1,8 +1,10 @@
 import {spawn} from 'child_process';
 import {watch} from 'chokidar';
-import logger from 'keramiko/logger';
 
-const log = logger.child('chokidar');
+import 'keramiko/logger';
+import {getLogger} from 'common/logger';
+
+const log = getLogger('chokidar');
 const watcher = watch('src/server/**/*.js');
 
 let proc;

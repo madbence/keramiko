@@ -1,6 +1,6 @@
-import {create} from 'common/logger';
+import {configure} from 'common/logger';
 
-export default create({
+configure({
   handler: record => {
     record.date = new Date();
 

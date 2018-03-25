@@ -5,6 +5,8 @@ const levels = [
   'error',
 ];
 
+let logger;
+
 function createRecord(context, message) {
   if (typeof context == 'string') {
     return {message: context};
@@ -15,7 +17,7 @@ function createRecord(context, message) {
   return context;
 }
 
-export function create(opts) {
+function create(opts) {
   const logger = {};
   const handle = opts.handler;
   const context = opts.context || {};
@@ -41,4 +43,12 @@ export function create(opts) {
   });
 
   return logger;
+}
+
+export function getLogger(name) {
+  return logger.child(name);
+}
+
+export function configure(opts) {
+  logger = create(opts);
 }
