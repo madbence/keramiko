@@ -8,8 +8,12 @@ const log = getLogger('chokidar');
 const watcher = watch('src/server/**/*.js');
 
 let proc;
+let restarting = false;
 
 async function start(reason) {
+  if (restarting) return;
+  restarting = true;
+
   log.info(reason);
 
   if (proc && !proc.terminated) {
@@ -23,6 +27,7 @@ async function start(reason) {
   proc = spawn('node_modules/.bin/babel-node', ['src/server/keramiko/app.js'], {
     stdio: 'inherit',
   });
+  restarting = false;
 
   proc.once('exit', (code, signal) => {
     proc.terminated = true;
