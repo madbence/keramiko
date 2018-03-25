@@ -6,9 +6,26 @@ jobs:
       - image: node:9-alpine
     steps:
       - checkout
+
+      - run:
+          name: Installing system dependencies
+          command: |
+            apk add --no-progress --update ca-certificates openssl
+            update-ca-certificates
+
       - run:
           name: Install dependencies
-          command: npm install
+          command: |
+            npm install --no-optional --silent
+
       - run:
           name: Lint code
-          command: node_modules/.bin/eslint src/server
+          command: |
+            mkdir ~/reports
+            node_modules/.bin/eslint --format junit --output-file ~/reports/eslint/report.xml src/server
+
+      - store_test_results:
+          path: ~/reports
+
+      - store_artifacts:
+          path: ~/reports
