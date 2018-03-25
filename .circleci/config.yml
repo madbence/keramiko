@@ -5,13 +5,13 @@ jobs:
     docker:
       - image: node:9-alpine
     steps:
-      - checkout
-
       - run:
           name: Installing system dependencies
           command: |
-            apk add --no-progress --update ca-certificates openssl
+            apk add --no-progress --update ca-certificates openssl git openssh
             update-ca-certificates
+
+      - checkout
 
       - run:
           name: Install dependencies
