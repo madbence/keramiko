@@ -7,7 +7,6 @@ const logger = getLogger('db');
 
 export async function query(sql, params) {
   const start = Date.now();
-  logger.debug(sql);
 
   try {
     const result = await pool.query(sql, params);
@@ -16,6 +15,7 @@ export async function query(sql, params) {
     logger.debug({
       duration,
       sql,
+      event: 'query.ok',
       length: result.rows.length,
       rowCount: result.rowCount,
       command: result.command,
@@ -23,12 +23,15 @@ export async function query(sql, params) {
 
     return result;
   } catch (error) {
+
     const duration = Date.now() - start;
     logger.error({
       duration,
       sql,
       error,
+      event: 'query.error',
     });
+
     throw error;
   }
 }
