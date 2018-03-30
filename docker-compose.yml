@@ -7,11 +7,13 @@ services:
     volumes:
       - .:/opt/app
       - node_modules:/opt/app/node_modules
+      - ./settings.yml:/settings.yml
     ports:
       - 3000:3000
     environment:
       PGHOST: db
       PGUSER: postgres
+      SETTINGS_FILE: /settings.yml
   db:
     image: postgres:alpine
 
