@@ -19,7 +19,7 @@ export async function query(sql, params) {
       length: result.rows.length,
       rowCount: result.rowCount,
       command: result.command,
-    }, `query was executed in ${duration}ms`);
+    }, `${sql}; (${duration}ms)`);
 
     return result;
   } catch (error) {
@@ -30,7 +30,7 @@ export async function query(sql, params) {
       sql,
       error,
       event: 'query.error',
-    });
+    }, `${sql}; (${duration}ms)`);
 
     throw error;
   }
