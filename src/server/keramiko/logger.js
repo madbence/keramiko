@@ -15,7 +15,7 @@ configure({
     }
 
     // eslint-disable-next-line no-console
-    console.log(`[${record.date.toISOString()}][${record.name}][${record.level}] ${record.message}`);
+    console.log(`[${record.date.toISOString()}][${record.name}][${record.level}]${record.event ? `[${record.event}]` : ''} ${record.message}`);
   },
 
   context: {
