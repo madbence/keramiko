@@ -1,7 +1,6 @@
 import compose from 'koa-compose';
 import {get} from 'koa-route';
-
-import * as products from 'keramiko/models/product';
+import {products} from 'keramiko/config';
 
 export default compose([
   get('/api/v1/products', async ctx => {

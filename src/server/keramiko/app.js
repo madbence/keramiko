@@ -1,11 +1,10 @@
 import Koa from 'koa';
 
-import 'keramiko/logger';
+import {logger} from 'keramiko/config';
 import router from 'keramiko/router';
-import {getLogger} from 'common/logger';
 
 const app = new Koa();
-const log = getLogger('http.app');
+const log = logger.child('http.app');
 
 app
 

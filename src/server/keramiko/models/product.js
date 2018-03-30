@@ -1,5 +1,3 @@
-import {query} from 'common/db';
-
 const parse = row => ({
   id: row.id,
   name: row.name,
@@ -8,15 +6,21 @@ const parse = row => ({
   deletedAt: row.deletedAt,
 });
 
-export async function getById(id) {
-  const result = await query('select * from products where id = $1', [id]);
+export default class ProductRepository {
+  constructor({db}) {
+    this.db = db;
+  }
 
-  if (!result.rows.lenth) return null;
-  return parse(result.rows[0]);
-}
+  async getById(id) {
+    const result = await this.db.query('select * from products where id = $1', [id]);
 
-export async function list(limit, offset) {
-  const result = await query('select * from products limit $1 offset $2', [limit, offset]);
+    if (!result.rows.lenth) return null;
+    return parse(result.rows[0]);
+  }
 
-  return result.rows.map(parse);
+  async list(limit, offset) {
+    const result = await this.db.query('select * from products limit $1 offset $2', [limit, offset]);
+
+    return result.rows.map(parse);
+  }
 }
