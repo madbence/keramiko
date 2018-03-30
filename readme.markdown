@@ -1,4 +1,4 @@
-# keramiko app [![ci status][badge]][ci]
+# keramiko app [![ci status][badge]][ci] [![coverage status][coverage-badge]][coverage]
 
 ## development
 
@@ -26,3 +26,5 @@ MIT
 
 [badge]: https://img.shields.io/circleci/project/github/madbence/keramiko.svg
 [ci]: https://circleci.com/gh/madbence/keramiko
+[coverage]: https://coveralls.io/github/madbence/keramiko?branch=master
+[coverage-badge]: https://coveralls.io/repos/github/madbence/keramiko/badge.svg?branch=master
