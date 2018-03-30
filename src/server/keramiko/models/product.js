@@ -14,7 +14,7 @@ export default class ProductRepository {
   async getById(id) {
     const result = await this.db.query('select * from products where id = $1', [id]);
 
-    if (!result.rows.lenth) return null;
+    if (!result.rows.length) return null;
     return parse(result.rows[0]);
   }
 
