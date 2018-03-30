@@ -49,6 +49,11 @@ jobs:
 
       - store_artifacts:
           path: ~/reports
+          destination: tests
+
+      - store_artifacts:
+          path: coverage/lcov-report
+          destination: coverage
 
       - run:
           name: Show coverage stats
