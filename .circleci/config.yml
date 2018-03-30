@@ -42,10 +42,16 @@ jobs:
       - run:
           name: Run tests
           command: |
-            node_modules/.bin/mocha --require @babel/register --reporter xunit 'src/**/*.test.js' > ~/reports/mocha/report.xml
+            node_modules/.bin/nyc --reporter lcov node_modules/.bin/mocha --require @babel/register --reporter xunit 'src/**/*.test.js' > ~/reports/mocha/report.xml
 
       - store_test_results:
           path: ~/reports
 
       - store_artifacts:
           path: ~/reports
+
+      - run:
+          name: Show coverage stats
+          command: |
+            node_modules/.bin/nyc report
+            node_modules/.bin/coveralls < coverage/lcov.info
