@@ -15,8 +15,12 @@ export default function createLogger() {
         if (!record.message) record.message = error.message;
       }
 
-      // eslint-disable-next-line no-console
+      /* eslint-disable no-console */
       console.log(`[${record.date.toISOString()}][${record.name}][${record.level}]${record.event ? `[${record.event}]` : ''} ${record.message}`);
+      if (record.error) {
+        console.log(record.error.stack);
+      }
+      /* eslint-enable no-console */
     },
 
     context: {
