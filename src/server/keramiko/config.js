@@ -11,4 +11,4 @@ const db = new DatabaseService({
 
 const products = new ProductRepository({db});
 
-export {products, logger};
+export {products, logger, db};
