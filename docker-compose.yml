@@ -14,6 +14,8 @@ services:
       SETTINGS_FILE: /settings.yml
   db:
     image: postgres:alpine
+    ports:
+      - 5432:5432
 
 volumes:
   node_modules:
