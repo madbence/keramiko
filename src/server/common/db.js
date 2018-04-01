@@ -42,6 +42,12 @@ class Client {
   }
 }
 
+class PoolClient extends Client {
+  release() {
+    this.client.release();
+  }
+}
+
 export default class DatabaseService extends Client {
   constructor({connectionString, logger}) {
     const pool = new Pool({connectionString});
@@ -51,8 +57,7 @@ export default class DatabaseService extends Client {
   }
 
   async transaction(fn) {
-    const dbClient = await this.client.connect();
-    const client = new Client(dbClient, this.logger);
+    const client = new PoolClient(await this.client.connect(), this.logger);
     try {
       await client.query('begin');
       await fn(client);
@@ -61,7 +66,7 @@ export default class DatabaseService extends Client {
       await client.query('rollback');
       throw err;
     } finally {
-      dbClient.release();
+      client.release();
     }
   }
 }
