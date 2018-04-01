@@ -37,6 +37,17 @@ class Client {
     }
   }
 
+  async transaction(fn) {
+    try {
+      await this.query('begin');
+      await fn(this);
+      await this.query('commit');
+    } catch (err) {
+      await this.query('rollback');
+      throw err;
+    }
+  }
+
   end() {
     return this.client.end();
   }
@@ -59,12 +70,7 @@ export default class DatabaseService extends Client {
   async transaction(fn) {
     const client = new PoolClient(await this.client.connect(), this.logger);
     try {
-      await client.query('begin');
-      await fn(client);
-      await client.query('commit');
-    } catch (err) {
-      await client.query('rollback');
-      throw err;
+      await client.transaction(fn);
     } finally {
       client.release();
     }
