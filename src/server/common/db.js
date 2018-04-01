@@ -1,8 +1,8 @@
 import {Pool} from 'pg';
 
-export default class DatabaseService {
-  constructor({connectionString, logger}) {
-    this.pool = new Pool({connectionString});
+class Client {
+  constructor(client, logger) {
+    this.client = client;
     this.logger = logger;
   }
 
@@ -10,7 +10,7 @@ export default class DatabaseService {
     const start = Date.now();
 
     try {
-      const result = await this.pool.query(sql, params);
+      const result = await this.client.query(sql, params);
 
       const duration = Date.now() - start;
       this.logger.debug({
@@ -34,6 +34,34 @@ export default class DatabaseService {
       }, `${sql}; (${duration}ms)`);
 
       throw error;
+    }
+  }
+
+  end() {
+    return this.client.end();
+  }
+}
+
+export default class DatabaseService extends Client {
+  constructor({connectionString, logger}) {
+    const pool = new Pool({connectionString});
+    super(pool, logger);
+
+    pool.on('error', error => logger.error(error));
+  }
+
+  async transaction(fn) {
+    const dbClient = await this.client.connect();
+    const client = new Client(dbClient, this.logger);
+    try {
+      await client.query('begin');
+      await fn(client);
+      await client.query('commit');
+    } catch (err) {
+      await client.query('rollback');
+      throw err;
+    } finally {
+      dbClient.release();
     }
   }
 }
