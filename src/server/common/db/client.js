@@ -1,6 +1,4 @@
-import {Pool} from 'pg';
-
-class Client {
+export default class Client {
   constructor(client, logger) {
     this.client = client;
     this.logger = logger;
@@ -50,29 +48,5 @@ class Client {
 
   end() {
     return this.client.end();
-  }
-}
-
-class PoolClient extends Client {
-  release() {
-    this.client.release();
-  }
-}
-
-export default class DatabaseService extends Client {
-  constructor({connectionString, logger}) {
-    const pool = new Pool({connectionString});
-    super(pool, logger);
-
-    pool.on('error', error => logger.error(error));
-  }
-
-  async transaction(fn) {
-    const client = new PoolClient(await this.client.connect(), this.logger);
-    try {
-      await client.transaction(fn);
-    } finally {
-      client.release();
-    }
   }
 }
