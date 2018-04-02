@@ -86,6 +86,34 @@ export default class ProductRepository {
     });
   }
 
+  destroy(id) {
+    const now = new Date();
+
+    return this.db.transaction(async db => {
+      const current = await this.getById(id);
+
+      if (current.deletedAt) return;
+
+      await db.query('update "products" set "updatedAt" = $1, "deletedAt" = $2 where id = $3', [
+        now,
+        now,
+        id,
+      ]);
+
+      const lastVersion = await this.store.getLastVersion('product', id);
+      await this.store.append({
+        type: 'product',
+        id,
+        version: lastVersion + 1,
+        createdAt: now,
+        details: null,
+        meta: {
+          event: 'destroyed',
+        },
+      });
+    });
+  }
+
   async getById(id) {
     const result = await this.db.query('select * from products where id = $1', [id]);
 
