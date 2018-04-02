@@ -5,7 +5,7 @@ const tables = [{
     ['aggregateType', 'varchar(32)'],
     ['aggregateId', 'int not null'],
     ['version', 'int not null'],
-    ['details', 'json not null'],
+    ['details', 'json'],
     ['meta', 'json not null'],
     ['createdAt', 'timestamp not null'],
   ],
