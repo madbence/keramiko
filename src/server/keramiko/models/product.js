@@ -63,7 +63,7 @@ export default class ProductRepository {
 
       if (fields.every(([field, value]) => current[field] === value)) return current;
 
-      const query = 'update "products" set ' + fields.map(([field], index) => `"${field}" = $${index + 1}`).join(', ') + `, "updatedAt" = $${fields.length + 1} where id = $${fields.length + 2}`;
+      const query = 'update "products" set ' + fields.map(([field,], index) => `"${field}" = $${index + 1}`).join(', ') + `, "updatedAt" = $${fields.length + 1} where id = $${fields.length + 2}`;
       await db.query(query, [
         ...fields.map(([, value]) => value),
         now,
