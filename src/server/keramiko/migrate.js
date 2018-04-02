@@ -14,4 +14,4 @@ const migrations = readdirSync(__dirname + '/migrations').sort((a, b) => directi
   }
 })().catch(err => {
   logger.error(err);
-});
+}).finally(() => db.end());
