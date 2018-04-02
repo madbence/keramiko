@@ -24,7 +24,7 @@ const tables = [{
 
 export async function up({db}) {
   for (const table of tables) {
-    await db.query(`create table "${table.name}" (${table.fields.map(([name, details]) => `"${name}" ${details}`).join(', ')})`);
+    await db.query(`create table "${table.name}" (${table.fields.map(([name, details]) => `"${name}" ${details}`).concat(table.extra || []).join(', ')})`);
   }
 }
 
