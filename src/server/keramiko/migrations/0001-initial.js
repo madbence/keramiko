@@ -1,32 +1,24 @@
 const tables = [{
-  name: 'users',
+  name: 'events',
   fields: [
     ['id', 'serial primary key'],
-    ['name', 'varchar(32) not null'],
-    ['email', 'varchar(32) not null'],
-    ['createdAt', 'timestamp not null default current_timestamp'],
-    ['updatedAt', 'timestamp not null default current_timestamp'],
-    ['deletedAt', 'timestamp'],
+    ['aggregateType', 'varchar(32)'],
+    ['aggregateId', 'int not null'],
+    ['version', 'int not null'],
+    ['details', 'json not null'],
+    ['meta', 'json not null'],
+    ['createdAt', 'timestamp not null'],
   ],
 }, {
   name: 'products',
   fields: [
-    ['id', 'serial primary key'],
-    ['name', 'varchar(32) not null'],
-    ['price', 'integer not null'],
-    ['description', 'text not null'],
-    ['createdAt', 'timestamp not null default current_timestamp'],
-    ['updatedAt', 'timestamp not null default current_timestamp'],
+    ['id', 'int primary key'],
+    ['name', 'varchar(64) not null'],
+    ['description', 'text'],
+    ['price', 'int not null'],
+    ['createdAt', 'timestamp not null'],
+    ['updatedAt', 'timestamp not null'],
     ['deletedAt', 'timestamp'],
-  ],
-}, {
-  name: 'events',
-  fields: [
-    ['id', 'serial primary key'],
-    ['type', 'varchar(32)'],
-    ['details', 'json not null'],
-    ['userId', 'int not null references users(id)'],
-    ['createdAt', 'timestamp not null default current_timestamp'],
   ],
 }];
 
@@ -35,13 +27,12 @@ export async function up({db}) {
     await db.query(`create table "${table.name}" (${table.fields.map(([name, details]) => `"${name}" ${details}`).join(', ')})`);
   }
 
-  await db.query('insert into users (name, email) values ($1, $2)', [
-    'System',
-    'admin@keramiko.eu',
-  ]);
+  await db.query('create sequence products_id_seq');
 }
 
 export async function down({db}) {
+  await db.query('drop sequence products_id_seq');
+
   for (const table of tables.reverse()) {
     await db.query(`drop table "${table.name}"`);
   }
