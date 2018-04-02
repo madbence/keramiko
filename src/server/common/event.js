@@ -13,6 +13,13 @@ class EventRepository {
       version,
     ]);
   }
+
+  async getLastVersion(type, id) {
+    const result = await this.db.query('select version from events where "aggregateType" = $1 and "aggregateId" = $2 order by version desc limit 1', [type, id]);
+
+    if (!result.rows[0]) throw new Error(`No existing version found for ${type}:${id}`);
+    return result.rows[0].version;
+  }
 }
 
 export {EventRepository};
