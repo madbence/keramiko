@@ -9,6 +9,9 @@ const tables = [{
     ['meta', 'json not null'],
     ['createdAt', 'timestamp not null'],
   ],
+  extra: [
+    'unique ("aggregateType", "aggregateId", version)',
+  ],
 }, {
   name: 'products',
   fields: [
