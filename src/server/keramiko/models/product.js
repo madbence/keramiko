@@ -58,7 +58,11 @@ export default class ProductRepository {
     const now = new Date();
 
     return this.db.transaction(async db => {
+      const current = await this.getById(id);
       const fields = Object.entries(props);
+
+      if (fields.every(([field, value]) => current[field] === value)) return current;
+
       const query = 'update "products" set ' + fields.map((entry, index) => `"${entry[0]}" = $${index + 1}`).join(', ') + `, "updatedAt" = $${fields.length + 1} where id = $${fields.length + 2}`;
       const result = await db.query(query, [
         ...fields.map(([field, value]) => value),
