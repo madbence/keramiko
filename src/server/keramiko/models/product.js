@@ -54,6 +54,33 @@ export default class ProductRepository {
     });
   }
 
+  update(id, props) {
+    const now = new Date();
+
+    return this.db.transaction(async db => {
+      const fields = Object.entries(props);
+      const query = 'update "products" set ' + fields.map((entry, index) => `"${entry[0]}" = $${index + 1}`).join(', ') + ` where id = $${fields.length + 1}`;
+      const result = await db.query(query, [
+        ...fields.map(([field, value]) => value),
+        id,
+      ]);
+      const lastVersion = await this.store.getLastVersion('product', id);
+
+      await this.store.append({
+        type: 'product',
+        id,
+        version: lastVersion + 1,
+        createdAt: now,
+        details: props,
+        meta: {
+          event: 'updated',
+        },
+      });
+
+      return this.getById(id);
+    });
+  }
+
   async getById(id) {
     const result = await this.db.query('select * from products where id = $1', [id]);
 
