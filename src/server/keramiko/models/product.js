@@ -13,18 +13,11 @@ export default class ProductRepository {
     this.store = store;
   }
 
-  async generateId() {
-    const result = await this.db.query('select nextval($1) as id', ['products_id_seq']);
-    return result.rows[0].id;
-  }
-
   async create(props) {
-    const id = await this.generateId();
     const now = new Date();
 
     await this.db.transaction(async db => {
-      await db.query('insert into products (id, name, price, description, "createdAt", "updatedAt", "deletedAt") values ($1, $2, $3, $4, $5, $6, $7)', [
-        id,
+      const result = await db.query('insert into products (name, price, description, "createdAt", "updatedAt", "deletedAt") values ($1, $2, $3, $4, $5, $6) returning id', [
         props.name,
         props.price,
         props.description,
@@ -32,6 +25,7 @@ export default class ProductRepository {
         now,
         null,
       ]);
+      const id = result.rows[0].id;
 
       await this.store.append({
         type: 'product',
