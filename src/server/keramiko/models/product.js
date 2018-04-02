@@ -33,7 +33,6 @@ export default class ProductRepository {
         version: 0,
         createdAt: now,
         details: {
-          id,
           name: props.name,
           price: props.price,
           description: props.description,
