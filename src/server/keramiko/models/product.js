@@ -1,6 +1,7 @@
 const parse = row => ({
   id: row.id,
   name: row.name,
+  description: row.description,
   createdAt: row.createdAt,
   updatedAt: row.updatedAt,
   deletedAt: row.deletedAt,
