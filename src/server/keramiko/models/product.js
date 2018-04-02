@@ -59,9 +59,10 @@ export default class ProductRepository {
 
     return this.db.transaction(async db => {
       const fields = Object.entries(props);
-      const query = 'update "products" set ' + fields.map((entry, index) => `"${entry[0]}" = $${index + 1}`).join(', ') + ` where id = $${fields.length + 1}`;
+      const query = 'update "products" set ' + fields.map((entry, index) => `"${entry[0]}" = $${index + 1}`).join(', ') + `, "updatedAt" = $${fields.length + 1} where id = $${fields.length + 2}`;
       const result = await db.query(query, [
         ...fields.map(([field, value]) => value),
+        now,
         id,
       ]);
       const lastVersion = await this.store.getLastVersion('product', id);
