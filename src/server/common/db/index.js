@@ -14,7 +14,7 @@ export default class DatabaseService extends Client {
   async transaction(fn) {
     const client = new PoolClient(await this.client.connect(), this.logger);
     try {
-      await client.transaction(fn);
+      return await client.transaction(fn);
     } finally {
       client.release();
     }

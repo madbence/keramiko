@@ -38,8 +38,9 @@ export default class Client {
   async transaction(fn) {
     try {
       await this.query('begin');
-      await fn(this);
+      const result = await fn(this);
       await this.query('commit');
+      return result;
     } catch (err) {
       await this.query('rollback');
       throw err;
