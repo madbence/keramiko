@@ -2,4 +2,4 @@
 
 [ "$(ls -A node_modules)" ] || npm i
 
-node_modules/.bin/babel-node src/server/keramiko/monitor.js
+node -r @babel/polyfill -r @babel/register src/server/keramiko/monitor.js

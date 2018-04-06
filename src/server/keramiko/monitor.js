@@ -23,7 +23,11 @@ async function start(reason) {
     });
   }
 
-  proc = spawn('node_modules/.bin/babel-node', ['src/server/keramiko/app.js'], {
+  proc = spawn('node', [
+    '-r', '@babel/polyfill',
+    '-r', '@babel/register',
+    'src/server/keramiko/app.js',
+  ], {
     stdio: 'inherit',
   });
   restarting = false;
